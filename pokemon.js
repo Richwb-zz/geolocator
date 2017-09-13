@@ -25,7 +25,6 @@ var pokeTypesList = [];
 // the choosen type to use
 var pokeRandomType = "";
 
-
 // searches through array to find all pokemon types that can be found in that location and places in an array
 for (var i = 0; i < typeLocation.length; i++) {
 	if(typeLocation[i].indexOf(pokeLocation) !== -1){
@@ -33,12 +32,9 @@ for (var i = 0; i < typeLocation.length; i++) {
 	}
 }
 
-console.log(pokeTypesList);
 // Randomly chooses one of the types
 pokeRandomType = pokeTypesList[Math.round(Math.random() * (pokeTypesList.length-1))];
 
-
-console.log("url " + pokeUrl + "type/" + pokeRandomType);
 // API call using selected type
 $.ajax({
 	url: pokeUrl + "type/" + pokeRandomType,
@@ -52,10 +48,12 @@ $.ajax({
 		
 		// Loops through the Objects and collets all information in Pokemon object
 		$.each(pokeTypeData.pokemon, function(key, value){
+			
 			// Need to find out if pokemon is generation 1 via id, only provided in the url
 			// Remove all url information and leaves the id number
 			pokeNumGrab = value.pokemon.url.replace("http://pokeapi.co/api/v2/pokemon/", "");
 			pokeNumGrab = pokeNumGrab.replace("/","");
+			
 			// Gen 1 pokemon go up to 151 so if in that range add to array
 			if(parseInt(pokeNumGrab) < 152){
 				pokeList.push(pokeNumGrab);
@@ -72,7 +70,6 @@ $.ajax({
 			dataType: "json",
 			success:
 			function(pokeData){
-				console.log(JSON.stringify(pokeData));
 				
 				// Assign objects to values
 				var pokeSprite = pokeData.sprites.front_default;
@@ -85,8 +82,6 @@ $.ajax({
 				$.each(pokeData.types, function(key, value){
 					pokeTypes.push(value.type.name);
 				});
-
-				console.log("pokeInfo " + pokeSprite + " " + PokeNumber + " " +  PokeName + " " +  PokeHeight + " " +  PokeWeight + " " +  JSON.stringify(pokeTypes));
 			},
 			error:
 			function(error){
