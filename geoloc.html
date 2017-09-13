@@ -23,24 +23,28 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&libraries=places"></script>
+
 
     <script>
 
 
-    var queryURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU";
+    // var queryURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU";
 
-      $.ajax({
-        url: queryURL,
-        method: "GET",
-        dataType: "json"
-      }).done(function(response) {
-        console.log(response);//to check for data
+    //   $.ajax({
+    //     url: queryURL,
+    //     method: "GET",
+    //     dataType: "json"
+    //   }).done(function(response) {
+    //     console.log(response);//to check for data
 
-        var results = response.data;//eaiser than typing it all out
+    //     var results = response.data;//eaiser than typing it all out
 
-        console.log(results.results[0]);
+    //     console.log(results.results[0]);
 
-      });
+    //   });
+
+
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
@@ -61,11 +65,31 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+
+            var imgTest ="http://pokeapi.co/media/sprites/pokemon/25.png";
+            var beachMarker = new google.maps.Marker({
+              position: pos,
+              map: map,
+              icon: imgTest
+            });
+
+            var Marker = new google.maps.Marker({
+              position: {
+              lat: (45),
+              lng: (-78)
+            },
+              map: map,
+              icon: imgTest
+            });
+
             console.log(pos.lat);
             console.log(pos.lng);
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
+            console.log(google.maps);
+
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent("Y'all at here.");
+            // infoWindow.open(map);
+
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -86,6 +110,7 @@
         infoWindow.open(map);
       }
     </script>
+    <img src="http://pokeapi.co/media/sprites/pokemon/25.png">
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&callback=initMap">
     </script>
