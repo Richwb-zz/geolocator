@@ -1,6 +1,6 @@
-typeLocation = ["bug","campground", "park", "zoo", "pet_store", "university", "veterinary_care"], 
+var typeLocation = [["bug","campground", "park", "zoo", "pet_store", "university", "veterinary_care"], 
 ["dragon","library", "zoo", "stadium", "pet_store", "art_gallery", "veterinary_care"],
-["ice,","zoo", "night_club", "pet_store", "veterinary_care"],
+["ice","zoo", "night_club", "pet_store", "veterinary_care"],
 ["fighting","gym", "zoo", "police", "pet_store", "fighting", "veterinary_care"],
 ["fire","fire_station", "zoo", "bakery", "gas_station", "pet_store", "veterinary_care"],
 ["flying","airport", "zoo", "travel_agency", "amusement_park", "pet_store", "veterinary_care"],
@@ -14,6 +14,37 @@ typeLocation = ["bug","campground", "park", "zoo", "pet_store", "university", "v
 ["rock","rock", "museum", "zoo", "cafe", "jewelry_store", "pet_store", "veterinary_care"],
 ["water","aquarium", "zoo", "amusement_park", "pet_store", "veterinary_care"]];
 
-var testLocation = "subway_station";
+var pokeUrl = "http://pokeapi.co/api/v2/type/";
+var pokeLocation = "subway_station";
+var pokeTypes = [];
+var pokeRandomType = "";
 
-http://pokeapi.co/api/v2/
+for (var i = 0; i < typeLocation.length; i++) {
+	if(typeLocation[i].indexOf(pokeLocation) !== -1){
+		pokeTypes.push(typeLocation[i][0]);
+	}
+}
+
+pokeRandomType = Math.round(Math.random() * pokeTypes.length);
+
+$.ajax({
+	url: pokeUrl + pokeRandomType,
+	type: "GET",
+	dataType: "json",
+	success:
+	function(pokeData){
+		console.log(pokeData);
+		var pokeCount = 0;
+		var pokeRand;
+
+		$.each(pokeData.pokemon, function(key, value){
+			pokeCount++;
+		});
+
+		pokeRand = Math.round(Math.random() * pokeCount);
+		console.log(pokeRand);
+//		pokeData[pokeRand].
+
+	}
+})
+
