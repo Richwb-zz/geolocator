@@ -23,70 +23,35 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&libraries=places"></script>
-
-
     <script>
+      
+      var map;
+      var infowindow;
 
-
-    
-
-
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to locate you.
-
-
-      var map, infoWindow, service;
       function initMap() {
-
-        var centerLoc = new google.maps.LatLng(37.4213897,-122.083906);
+        var pos = {lat: 37.4213897, lng: -122.083906};
 
         map = new google.maps.Map(document.getElementById('map'), {
-          center: centerLoc,
-
-          zoom: 16
+          center: pos,
+          zoom: 15
         });
-        infoWindow = new google.maps.InfoWindow;
 
+        infowindow = new google.maps.InfoWindow();
+        
 
-    //   function initialize() {
-
-      var request = {
-        location: centerLoc,
-        radius: '50000',
-        type: ['restaurant']
-      };
-
-      service = new google.maps.places.PlacesService(map);
-      service.nearbySearch(request, callback);
-    // }
-
-    
-
-
-        // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
 
-            var imgTest ="http://pokeapi.co/media/sprites/pokemon/25.png";
-            var beachMarker = new google.maps.Marker({
-              position: pos,
-              map: map,
-              icon: imgTest
-            });
-
-            console.log(pos.lat);
-            console.log(pos.lng);
-            console.log(google.maps);
-
-            // infoWindow.setPosition(pos);
-            // infoWindow.setContent("Y'all at here.");
-            // infoWindow.open(map);
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+              location: pos,
+              radius: 500,
+              type: ['points-of-intrest']
+            }, callback);
 
             map.setCenter(pos);
           }, function() {
@@ -100,26 +65,53 @@
         }
       }
 
-    function callback(results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          var place = results[i];
-          createMarker(results[i]);
+      function callback(results, status) {
+
+        console.log(results);
+
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < 5; i++) {
+
+            createMarker(results[i]);
+            console.log(results[i].types);
+          }
         }
       }
-    }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+      function createMarker(place) {
+
+        //replace with pokeCall
+        var imgTest ="http://pokeapi.co/media/sprites/pokemon/25.png"; 
+
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          animation: google.maps.Animation.DROP,
+          icon: imgTest
+        });
+        marker.addListener('click', toggleBounce);
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.types);
+          infowindow.open(map, this);
+        });
+
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
       }
+     }
+
+
+
+
     </script>
     <img src="http://pokeapi.co/media/sprites/pokemon/25.png">
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&callback=initMap">
-    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>

@@ -65,7 +65,7 @@ function createMarker(place) {
   marker.addListener('click', toggleBounce);
 
   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
+    infowindow.setContent(place.type);
     infowindow.open(map, this);
   });
 
