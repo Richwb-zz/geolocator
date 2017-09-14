@@ -29,34 +29,41 @@
     <script>
 
 
-    // var queryURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU";
-
-    //   $.ajax({
-    //     url: queryURL,
-    //     method: "GET",
-    //     dataType: "json"
-    //   }).done(function(response) {
-    //     console.log(response);//to check for data
-
-    //     var results = response.data;//eaiser than typing it all out
-
-    //     console.log(results.results[0]);
-
-    //   });
+    
 
 
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-      var map, infoWindow;
+      // failed.", it means you probably did not give permission for the browser to locate you.
+
+
+      var map, infoWindow, service;
       function initMap() {
+
+        var centerLoc = new google.maps.LatLng(37.4213897,-122.083906);
+
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 37.4213897, lng: -122.083906},
+          center: centerLoc,
 
           zoom: 16
         });
         infoWindow = new google.maps.InfoWindow;
+
+
+    //   function initialize() {
+
+      var request = {
+        location: centerLoc,
+        radius: '50000',
+        type: ['restaurant']
+      };
+
+      service = new google.maps.places.PlacesService(map);
+      service.nearbySearch(request, callback);
+    // }
+
+    
+
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -69,15 +76,6 @@
             var imgTest ="http://pokeapi.co/media/sprites/pokemon/25.png";
             var beachMarker = new google.maps.Marker({
               position: pos,
-              map: map,
-              icon: imgTest
-            });
-
-            var Marker = new google.maps.Marker({
-              position: {
-              lat: (45),
-              lng: (-78)
-            },
               map: map,
               icon: imgTest
             });
@@ -101,6 +99,15 @@
           handleLocationError(false, infoWindow, map.getCenter());
         }
       }
+
+    function callback(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          createMarker(results[i]);
+        }
+      }
+    }
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
