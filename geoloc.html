@@ -33,7 +33,7 @@
 
         map = new google.maps.Map(document.getElementById('map'), {
           center: pos,
-          zoom: 15
+          zoom: 16
         });
 
         infowindow = new google.maps.InfoWindow();
@@ -50,7 +50,8 @@
             service.nearbySearch({
               location: pos,
               radius: 500,
-              type: ['points-of-intrest']
+              types: ['cafe', 'bar'],
+              rankBy: google.maps.places.RankBy.PROMINENCE,
             }, callback);
 
             map.setCenter(pos);
@@ -70,7 +71,7 @@
         console.log(results);
 
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < 5; i++) {
+          for (var i = 0; i < results.length; i++) {
 
             createMarker(results[i]);
             console.log(results[i].types);
@@ -93,7 +94,7 @@
         marker.addListener('click', toggleBounce);
 
         google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.types);
+          infowindow.setContent(place.types[0]);
           infowindow.open(map, this);
         });
 
@@ -106,9 +107,6 @@
         }
       }
      }
-
-
-
 
     </script>
     <img src="http://pokeapi.co/media/sprites/pokemon/25.png">
