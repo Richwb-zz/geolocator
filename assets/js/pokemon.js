@@ -42,7 +42,7 @@ var typeLocation = [["airport","flying"],
 ["lodging","ghost","normal,","bug"]];
 
 // API url
-var pokeUrl = "http://pokeapi.co/api/v2/";
+var pokeUrl = "https://pokeapi.co/api/v2/";
 // Will hold list of types that can be found in the passed location
 var pokeTypesList = [];
 // the choosen type to use
@@ -84,7 +84,7 @@ function api(typeChosen){
 
 				// Need to find out if pokemon is generation 1 via id, only provided in the url
 				// Remove all url information and leaves the id number
-				pokeNumGrab = value.pokemon.url.replace("http://pokeapi.co/api/v2/pokemon/", "");
+				pokeNumGrab = value.pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/", "");
 				pokeNumGrab = pokeNumGrab.replace("/","");
 				
 				// Gen 1 pokemon go up to 151 so if in that range add to array
