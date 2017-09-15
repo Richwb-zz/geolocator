@@ -58,7 +58,7 @@ function callback(results, status) {
 function createMarker(place) {
 
   //replace with pokeCall
-  var imgTest ="http://pokeapi.co/media/sprites/pokemon/25.png"; 
+  var imgTest ="https://pokeapi.co/media/sprites/pokemon/25.png"; 
 
   var placeLoc = place.geometry.location;
   var marker = new google.maps.Marker({
