@@ -2,7 +2,7 @@ var map;
 var infowindow;
 
 var locTypes = ["airport", "aquarium", "bar", "campground", "cemetery", "electrician", "electronics_store", "fire_station", "florist", "funeral_home", "gym", "library", "liquor_store", "museum", "park", "zoo", "restaurant", "stadium", "doctor", "police","travel_agency", "pharmacy", "shopping_mall", "bakery", "night_club", "train_station", "school", "gas_station", "amusement_park", "cafe", "subway_station", "jewelry_store", "pet_store", "university", "art_gallery", "parking", "rv_park", "veterinary_care", "movie_theater","lodging"]
-var searchZone = 500;
+var searchZone = 5000;
 
 function initMap() {
   var pos = {lat: 37.4213897, lng: -122.083906};
@@ -58,7 +58,7 @@ function callback(results, status) {
 function createMarker(place) {
 
   //replace with pokeCall
-  var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png"; 
+  var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
 
   var placeLoc = place.geometry.location;
   var marker = new google.maps.Marker({

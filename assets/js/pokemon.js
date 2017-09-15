@@ -112,7 +112,7 @@ function api(typeChosen){
 					
 					// Loop through the pokemon's types and add them to the array 
 					$.each(pokeData.types, function(key, value){
-						pokeTypesList.push(value.type.name);
+						pokeTypesList.push(value.types.name);
 					});
 
 					console.log(pokeSprite + " " + PokeNumber + " " + PokeName + " " + PokeHeight + " " + PokeWeight + " " + pokeTypesList);
