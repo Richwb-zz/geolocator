@@ -67,7 +67,7 @@ function createMarker(place) {
     position: place.geometry.location,
     animation: google.maps.Animation.DROP,
     icon: imgTest
-  });
+  });//make markers
   marker.addListener('click', toggleBounce);
   marker.addListener('click', function(){
     pokeGetType(place.types);
