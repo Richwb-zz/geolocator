@@ -38,12 +38,11 @@ var typeLocation = [["airport","flying"],
 ["parking","fighting"],
 ["rv_park","poison","grass"],
 ["veterinary_care","bug","dragon","ice","fighting","fire","flying","grass","ghost","ground","electric","normal","poison","psychic","rock","water"],
-["movie_theater","ghost","electric"]];
+["movie_theater","ghost","electric"],
+["lodging","ghost","normal,","bug"]];
 
 // API url
 var pokeUrl = "http://pokeapi.co/api/v2/";
-// Location to be passed from google API
-var pokeLocation = 
 // Will hold list of types that can be found in the passed location
 var pokeTypesList = [];
 // the choosen type to use
@@ -51,20 +50,27 @@ var pokeRandomType = "";
 
 
 // searches through array to find the location and then randomly chooses one of its types
-for (var i = 0; i < pokeLocation.length; i++) {
-	for (var j = 0; j < typeLocation.length - 1 ; j++) {
-		if(typeLocation[j][0] == pokeLocation[i]){
-			randomPoke = typeLocation[j][Math.floor((Math.random() * (typeLocation[j].length-1))+1)]
 
+function pokeGetType(pokeLocation){
+	console.log("clicked" + pokeLocation);
+	loop:
+	for (var i = 0; i < pokeLocation.length; i++) {
+		for (var j = 0; j < typeLocation.length ; j++) {
+			console.log(typeLocation[j][0] + " " + pokeLocation[i]);
+			if(typeLocation[j][0] == pokeLocation[i]){
+				var typeChosen = typeLocation[j][Math.floor((Math.random() * (typeLocation[j].length-1))+1)]
+				break loop;
+			}
 		}
 	}
+	api(typeChosen);
 }
 
-function api(){
+function api(typeChosen){
 
 // API call using selected type
 	$.ajax({
-		url: pokeUrl + "type/" + pokeRandomType,
+		url: pokeUrl + "type/" + typeChosen,
 		type: "GET",
 		dataType: "json",
 		success:
@@ -72,10 +78,10 @@ function api(){
 			var pokeChoosen = 0;
 			var pokenumGrab = "";
 			var pokeList = [];
-			
+
 			// Loops through the Objects and collets all information in Pokemon object
 			$.each(pokeTypeData.pokemon, function(key, value){
-				
+
 				// Need to find out if pokemon is generation 1 via id, only provided in the url
 				// Remove all url information and leaves the id number
 				pokeNumGrab = value.pokemon.url.replace("http://pokeapi.co/api/v2/pokemon/", "");
@@ -86,13 +92,12 @@ function api(){
 					pokeList.push(pokeNumGrab);
 				}
 			});
-			
 			// Randomly choose a pokemon from the list
-			pokeChoosen = pokeList[Math.round(Math.random() * (pokeList.length-1))];
+			pokeChosen = pokeList[Math.round(Math.random() * (pokeList.length-1))];
 
 			// Do a request on the selected pokemon
 			$.ajax({
-				url: pokeUrl + "pokemon/" + pokeChoosen,
+				url: pokeUrl + "pokemon/" + pokeChosen,
 				type: "GET",
 				dataType: "json",
 				success:
@@ -109,10 +114,12 @@ function api(){
 					$.each(pokeData.types, function(key, value){
 						pokeTypesList.push(value.type.name);
 					});
+
+					console.log(pokeSprite + " " + PokeNumber + " " + PokeName + " " + PokeHeight + " " + PokeWeight + " " + pokeTypesList);
 				},
 				error:
 				function(error){
-					console.log("test2 " + pokeRand + " " + JSON.stringify(error));
+					console.log("test2 " + pokeChosen + " " + JSON.stringify(error));
 				}
 			});
 		},

@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Test</title>
-</head>
-<body>
-<div id="test">
-</div>
+<html lang="us">
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  
+  <body>
+    
+    <div id="map"></div>
+    
+    
+    <script type="text/javascript" src="assets/js/game.js"></script>
+  
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&libraries=places&callback=initMap" async defer>
+    </script>
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous">
-</script>
-<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
-<script type="text/javascript" src="game.js"></script>
-<script type="text/javascript" src="data.js"></script>
-<script type="text/javascript" src="pokemon.js"></script>
-</body>
+    <script type="text/javascript" src="assets/js/pokemon.js"></script>
+  
+  </body>
 </html>
