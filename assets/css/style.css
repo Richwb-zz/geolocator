@@ -1,0 +1,25 @@
+.pokedex {
+	border: 3px solid red;
+	height: 635px;
+	width: 1100px;
+	background: red radial-gradient(lightred, gold);
+}
+
+#poke {
+	width: 100%;
+	height: 560px;
+	border: 3px solid blue;
+	border-radius: 1em;
+	margin-top: 0;
+}
+
+.card-section {
+	height: 250px;
+}
+
+#pokedexbutton {
+	max-width: 8%;
+	max-height: 8%;
+	margin-left: 20px;
+	margin-top: 10px;
+}
