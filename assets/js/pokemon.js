@@ -102,22 +102,26 @@ function api(typeChosen){
 				dataType: "json",
 				success:
 				function(pokeData){
-					skip = 0;
+					pokeTypeNum = 1;
 					pokeTypesList = [];
 
 					// Assign objects to values
-					var pokeSprite = pokeData.sprites.front_default;
-					var PokeNumber = pokeData.id;
-					var PokeName = pokeData.name;
-					var PokeHeight = pokeData.height;
-					var PokeWeight = pokeData.weight;
-
+					var pokeFoundInfo = {id: pokeData.id,
+						name: pokeData.name, 
+						sprite: pokeData.sprites.front_default,
+						height: pokeData.height,
+						weight: pokeData.weight
+					};
+					
 					// Loop through the pokemon's types and add them to the array 
 					$.each(pokeData.types, function(key, value){
-							pokeTypesList.push(value.type.name);
+							pokeFoundInfo["type" + pokeTypeNum] = value.type.name;
+							pokeTypeNum++;
 					});
 
-					console.log(pokeSprite + " " + PokeNumber + " " + PokeName + " " + PokeHeight + " " + PokeWeight + " " + pokeTypesList);
+					console.log(JSON.stringify(pokeFoundInfo));
+
+					pokeFound(pokeFoundInfo);
 				},
 				error:
 				function(error){
