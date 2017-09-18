@@ -80,6 +80,7 @@ function createMarker(place) {
 
 		var rangeCheck = true;
 
+
 		if (rangeCheck === false){
 			// radius comparision nooot working atm.
 			// TDL.
@@ -90,7 +91,9 @@ function createMarker(place) {
 			infowindow.open(map, this);
 			toggleBounce();
 			soundBattle();
+			pokeGetType(place.types);
 		}
+
 
 	});
 	
