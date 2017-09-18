@@ -74,7 +74,9 @@ function createMarker(place) {
 	});//make markers
 
 	google.maps.event.addListener(marker, 'click', function() {
-
+		
+		pokeGetType(place.types);
+		
 		var rangeCheck = true;
 
 		if (rangeCheck === false){
@@ -101,6 +103,7 @@ function createMarker(place) {
 	function soundStop(){
 		batSound.pause();
 		marker.setMap(null);
+
 	}
 
 	function toggleBounce() {
