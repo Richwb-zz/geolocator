@@ -101,7 +101,7 @@ function viewPokedex(){
       }
     }
 
-    $("#test").html(pokedexHtml);
+    $("#pokedex-window").html(pokedexHtml);
   });
 }
 
@@ -122,7 +122,7 @@ function viewPokemon(id){
 
     });
 
-    
+
 
   });
 

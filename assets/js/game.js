@@ -6,12 +6,15 @@ function pokeFound(pokeInfo){
 	foundPokedex(pokeInfo);
 }
 
-$("#view-map").on("click", function(){
+$("#map-button").on("click", function(){
+	$("#pokedex-window").html("");
 	$("#pokedex-window").load("map.html");
 });
 
-$("#view-pokedex").on("click", function(){
-	$("#pokedex-window").load("pokedex.html");
+$("#pokeball-button").on("click", function(){
+	$("#pokedex-window").html("");
+	viewPokedex;
+	//$("#pokedex-window").unload("map.html");
 	viewPokedex();
 });
 
