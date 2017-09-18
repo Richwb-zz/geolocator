@@ -36,7 +36,7 @@ function foundPokedex(pokeInfo){
 }
 
 function caughtPokedex(pokeInfo){
-  var pokeSet = [];
+  var pokeSet = {};
   
   pokeSet[pokeInfo.id] = {
     pokedex: {
@@ -82,8 +82,8 @@ function viewPokedex(){
       }
 
       pokedexHtml += "<div class='row'>";
-      pokedexHtml += "<div class='col'>N<sub>o</sub>" + value.id + "</div>";
-      pokedexHtml += "<div class='col'>" + value.name + "</div>"
+      pokedexHtml += "<div class='col'>N<sub>o</sub><span class='pokedex-id'>" + value.id + "</span></div>";
+      pokedexHtml += "<div class='col pokemon'>" + value.name + "</div>"
       pokedexHtml += "</div>";
 
       previousId = currentId;
@@ -105,4 +105,28 @@ function viewPokedex(){
   });
 }
 
-viewPokedex();
+function viewPokemon(id){
+  var pokeStats;
+
+  fdb.ref("User/pokedex/" + id)
+  .once("value")
+  .then(function(pokedex){
+    pokeStats = pokeShot;
+    console.log(JSON.stringify(pokedex));
+  
+    fdb.ref("User/pokedetails/" + id)
+    .once("value")
+    .then(function(pokeStats){
+    pokeStats = pokeShot;
+    console.log(JSON.stringify(pokeStats));
+
+    });
+
+    
+
+  });
+
+
+}
+
+viewPokemon(7);
