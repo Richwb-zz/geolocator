@@ -6,28 +6,33 @@ function pokeFound(pokeInfo){
 	foundPokedex(pokeInfo);
 }
 
+$("#view-map").on("click", function(){
+	$("#pokedex-window").load("map.html");
+})
+
+$("#view-pokedex").on("click", function(){
+	$("#pokedex-window").load("pokedex.html");
+	viewPokedex();
+})
+
 $("#battle-ok").on("click", function(){
 	$("#battle-text").html("A wild" + $("#battle-name").text() + "has appeared!");
 	$("#battle-text").html("<button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
 })
 
-$("battle-run").on("click", function(){
-	$("#battle-text").html("Got away safely! <button id='battle-safelyok'>Ok</button>");
+$("#battle-run").on("click", function(){
+	$("#battle-text").html("Got away safely! <button id='battle-runok'>Ok</button>");
 })
 
-$("battle-run").on("click", function(){
-	$("#battle-text").html("Got away safely! <button id='battle-safelyok'>Ok</button>");
-})
-
-$("battle-safelyok").on("click", function(){
+$("#battle-runok").on("click", function(){
 	$("#pokedex-window").load("map.html");
 })
 
-$("battle-fled").on("click", function(){
+$("#battle-fled").on("click", function(){
 	$("#pokedex-window").load("map.html");
 })
 
-$("battle-catch").on("click", function(){
+$("#battle-catch").on("click", function(){
 	
 	if(pokeInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 20);
@@ -38,7 +43,7 @@ $("battle-catch").on("click", function(){
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
-		$("#battle-text").html(pokeInfo.name + " was caught! <button id='battle-fled'>Ok</button>");
+		$("#battle-text").html(pokeInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
 		caughtPokedex();
 
 	}else{

@@ -10,16 +10,17 @@ var config = {
 };
 
 firebase.initializeApp(config);
-var fdb = firebase.database;
+var fdb = firebase.database();
 
 
 function foundPokedex(pokeInfo){
-  fdb.ref("User/PokeList/" + pokeInfo.id)
+  fdb.ref("User/Pokedex/" + pokeInfo.id)
   .once("value")
-  .then(function(snapshot){
-    if(!(snapshot.val())){
+  .then(function(pokeShot){
+    if(!(pokeShot.val())) {
+      var pokeSet = [];
       
-      var pokeSet[pokeInfo.id] = {
+      pokeSet[pokeInfo.id] = {
         pokedex: {
           caught: "no",
           id: pokeInfo.id,
@@ -29,14 +30,15 @@ function foundPokedex(pokeInfo){
       };
 
 
-      fdb.ref("User/PokeList").set(pokeSet);
+      fdb.ref("User/Pokedex").set(pokeSet);
     }
   });
 }
 
 function caughtPokedex(pokeInfo){
-
-  var pokeSet[pokeInfo.id] = {
+  var pokeSet = [];
+  
+  pokeSet[pokeInfo.id] = {
     pokedex: {
       caught: yes
     },
@@ -50,6 +52,57 @@ function caughtPokedex(pokeInfo){
     pokeSet[pokeInfo.id][types]["type" + 1] = pokeInfo[i];
   }
 
-  fdb.ref("User/PokeList/" + pokeInfo.id).update(pokeSet);
 
+  fdb.ref("User/pokedetails/" + pokeInfo.id).update(pokeSet);
 }
+
+function viewPokedex(){
+  fdb.ref("User/pokedex")
+  .once("value")
+  .then(function(pokeShot){
+
+    var pokedexHtml = "";
+    var previousId = 1;
+    var currentId = 1;
+
+    $.each(pokeShot.val(), function(key, value){
+      pokedexHtml += "valueId " + value.id;
+      currentId = value.id;
+      pokedexHtml += "math " + (currentId - previousId);
+      
+      if(currentId - previousId > 1){
+        while(currentId - previousId > 1){
+          previousId++
+          pokedexHtml += "test" + previousId;
+          pokedexHtml += "<div class='row'>";
+          pokedexHtml += "<div class='col'>N<sub>o</sub>" + previousId + "</div>";
+          pokedexHtml += "<div class='col'>?????</div>"
+          pokedexHtml += "</div>";
+        }
+      }
+
+      pokedexHtml += "<div class='row'>";
+      pokedexHtml += "<div class='col'>N<sub>o</sub>" + value.id + "</div>";
+      pokedexHtml += "<div class='col'>" + value.name + "</div>"
+      pokedexHtml += "</div>";
+
+      previousId = currentId;
+    });
+
+    if(currentId < 152){
+      currentId ++
+      while(currentId < 152){
+        pokedexHtml += "<div class='row'>";
+        pokedexHtml += "<div class='col'>N<sub>o</sub>" + currentId + "</div>";
+        pokedexHtml += "<div class='col'>?????</div>"
+        pokedexHtml += "</div>";
+
+        currentId++
+      }
+    }
+
+    $("#test").html(pokedexHtml);
+  });
+}
+
+viewPokedex();
