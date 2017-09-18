@@ -4,6 +4,8 @@ var infowindow;
 var locTypes = ["airport", "aquarium", "bar", "campground", "cemetery", "electrician", "electronics_store", "fire_station", "florist", "funeral_home", "gym", "library", "liquor_store", "museum", "park", "zoo", "restaurant", "stadium", "doctor", "police","travel_agency", "pharmacy", "shopping_mall", "bakery", "night_club", "train_station", "school", "gas_station", "amusement_park", "cafe", "subway_station", "jewelry_store", "pet_store", "university", "art_gallery", "parking", "rv_park", "veterinary_care", "movie_theater","lodging"]
 var searchZone = 5000;
 
+var markerArray = [];
+
 function initMap() {
   var pos = {lat: 37.4213897, lng: -122.083906};
 
@@ -57,32 +59,58 @@ function callback(results, status) {
 
 function createMarker(place) {
 
-  //replace with pokeCall
-  var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
+	//replace with pokeCall
+	var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
 
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location,
-    animation: google.maps.Animation.DROP,
-    icon: imgTest
-  });
-  marker.addListener('click', toggleBounce);
-  marker.addListener('click', function(){
-    pokeGetType(place.types);
-  });
+	var placeLoc = place.geometry.location;
 
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.types[0]);
-    infowindow.open(map, this);
-  });
+	markerArray.push(placeLoc);
+	console.log("Ma" + markerArray);
 
+	var marker = new google.maps.Marker({
 
-function toggleBounce() {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
+		map: map,
+		position: place.geometry.location,
+		animation: google.maps.Animation.DROP,
+		icon: imgTest
+
+	});//make markers
+
+	google.maps.event.addListener(marker, 'click', function() {
+
+		var rangeCheck = true;
+
+		if (rangeCheck === false){
+			// radius comparision nooot working atm.
+			// TDL.
+		}
+
+		else{
+			infowindow.setContent("Pokemon Found!");
+			infowindow.open(map, this);
+			toggleBounce();
+			soundBattle();
+		}
+
+	});
+	
+	var batSound = new Audio('assets/sound/14-battle-wild-poke-mon-.mp3');
+	
+	function soundBattle(){
+		batSound.play();
+		setTimeout(soundStop, 3000);
+	}
+
+	function soundStop(){
+		batSound.pause();
+		marker.setMap(null);
+	}
+
+	function toggleBounce() {
+	  if (marker.getAnimation() !== null) {
+	    marker.setAnimation(null);
+	  } else {
+	    marker.setAnimation(google.maps.Animation.BOUNCE);
+	  }
+	}
 }
