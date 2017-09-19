@@ -46,6 +46,8 @@ $("#pokemon").on("click", function(){
 })
 
 $("#battle-catch").on("click", function(){
+
+	$("#ball").addClass("animToss");
 	
 	if(pokeInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 20);

@@ -125,7 +125,7 @@ h1 {
     background-image: linear-gradient(180deg, #500000 0%, #FF0000 42%, #000000 48%, #FFFFFF 56%, #bfbfbf 100%);
     }
     
-#ball:active {
+#animToss {
     animation-name: testToss;
     animation-timing-function: linear;
     animation-duration: .8s; 
