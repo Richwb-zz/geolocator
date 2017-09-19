@@ -1,8 +1,11 @@
+
+
 function pokeFound(pokeInfo){
 	$("#pokedex-window").load("battle.html", function(){
 		$("#battle").html("<img src='" + pokeInfo.sprite +"'>");
 		console.log("sprite " + pokeInfo.sprite);
 		$("#battle-footer").html("A wild" + pokeInfo.name + "has appeared! <button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
+		console.log("test2 " + pokeFoundInfo);
 	});
 	
 	
@@ -26,15 +29,15 @@ $("#battle-ok").on("click", function(){
 	
 });
 
-$("#battle-run").on("click", function(){
-	$("#battle-text").html("Got away safely! <button id='battle-runok'>Ok</button>");
+$(document).on("click", "#battle-run", function(){
+	$("#battle-footer").html("Got away safely! <button id='battle-runok'>Ok</button>");
 });
 
-$("#battle-runok").on("click", function(){
+$(document).on("click", "#battle-runok" , function(){
 	$("#pokedex-window").load("map.html");
 });
 
-$("#battle-fled").on("click", function(){
+$(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
@@ -45,9 +48,9 @@ $("#pokemon").on("click", function(){
 	$("#poke-info").removeClass("hide");
 })
 
-$("#battle-catch").on("click", function(){
+$(document).on("click", "#battle-catch", function(){
 	
-	if(pokeInfo.id < 130){
+	if(pokeFoundInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 20);
 		var pokeCatchroll = Math.round(Math.random() * 20);
 	}else{
@@ -56,28 +59,29 @@ $("#battle-catch").on("click", function(){
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
-		$("#battle-text").html(pokeInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
-		caughtPokedex();
+		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
+		console.log("caught");
+		// caughtPokedex();
 
 	}else{
 		var pokeRunChance = Math.round(Math.random() * 10);
 		var runState = false;
-		
-		if(pokeInfo.id === 63){
+		console.log("not caught");
+		if(pokeFoundInfo.id === 63){
 			if(pokeRunChance !== "2" || pokeRunChance !== "7"){
-				run = true;
+				runState = true;
 			}
 		}else{
 			var pokeRunRoll = Math.round(Math.random() * 5);
 
 			if(pokeRunRoll === pokeRunChance){
-				run = true;
+				runState = true;
+				console.log("ran");
 			}
 		}
 		if(runState === true){
-			$("#battle-name").addClass("hide");
-			$("#battle-sprite").addClass("hide");
-			$("#battle-text").html(pokeInfo.name + " has fled! <button id='battle-fled'>Ok</button>");
+			$("#battle").addClass("hide");
+			$("#battle-footer").html(pokeFoundInfo.name + " has fled! <button id='battle-fled'>Ok</button>");
 		}
 	}
 
