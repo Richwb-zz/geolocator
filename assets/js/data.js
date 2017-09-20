@@ -10,50 +10,101 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
+var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
+var user;
+
+// if(!user){
+//   firebase.auth().signInWithRedirect(provider);
+// }
+
+// firebase.auth().getRedirectResult().then(function(result) {
+//   if (result.credential) {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     var token = result.credential.accessToken;
+//     // ...
+//   }
+//   // The signed-in user info.
+//   user = result.user;
+// }).catch(function(error) {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+//   // The email of the user's account used.
+//   var email = error.email;
+//   // The firebase.auth.AuthCredential type that was used.
+//   var credential = error.credential;
+//   // ...
+// });
 
 
 function foundPokedex(pokeInfo){
-  fdb.ref("User/Pokedex/" + pokeInfo.id)
+  fdb.ref("User/pokedex/")
   .once("value")
   .then(function(pokeShot){
-    if(!(pokeShot.val())) {
-      var pokeSet = [];
-      
-      pokeSet[pokeInfo.id] = {
-        pokedex: {
-          caught: "no",
-          id: pokeInfo.id,
-          name: pokeInfo.name
-        },
-        image: pokeInfo.image
-      };
+    var pokeSet = [];
+    var pokedex = [];
+    
+    pokeSet = {
+      [pokeInfo.id]: {
+        image: pokeInfo.sprite
+      }
+    };
 
+    pokedex = {
+      [pokeInfo.id]: {
+        caught: "no",
+        id: pokeInfo.id,
+        name: pokeInfo.name
+      }
+    };
 
-      fdb.ref("User/Pokedex").set(pokeSet);
+    if(!pokeShot.val()) {
+      console.log("testy1");
+      fdb.ref("User/pokedetails").set(pokeSet);
+      fdb.ref("User/pokedex/").set(pokedex);
+    } else if(!pokeShot.val().id){
+      console.log("testy2");
+      fdb.ref("User/pokedetails/").update(pokeSet);
+      fdb.ref("User/pokedex/").update(pokedex);  
     }
   });
 }
 
-function caughtPokedex(pokeInfo){
-  var pokeSet = {};
-  
-  pokeSet[pokeInfo.id] = {
-    pokedex: {
-      caught: yes
-    },
+function caughtPokedex(){
+  var pokeStats = {};
+  var pokedex = {};
+  var types = {};
+  var typeKey;
+
+  pokeStats = {
+    image: pokeFoundInfo.sprite,
     stats: {
-      height: pokeInfo.height,
-      weight: pokeInfo.weight
+      height: pokeFoundInfo.height,
+      weight: pokeFoundInfo.weight
     }
   };
 
-  for (var i = 5; i < pokeInfo.length; i++) {
-    pokeSet[pokeInfo.id][types]["type" + 1] = pokeInfo[i];
+  pokedex["User/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
+  console.log("type1 " + pokeFoundInfo["type" + 1]);
+
+  for(var key in pokeFoundInfo){
+    if(key.includes("type")){
+      console.log("key " + key);
+      console.log("value " + pokeFoundInfo[key]);
+          
+      types = {[key] : pokeFoundInfo[key]};
+      fdb.ref("User/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
+    }
   }
+  
 
-
-  fdb.ref("User/pokedetails/" + pokeInfo.id).update(pokeSet);
+  console.log("types " + JSON.stringify(types));
+  fdb.ref("User/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
+  console.log("stats complete");
+  console.log("types complete");
+  fdb.ref().update(pokedex);
 }
 
 function viewPokedex(){

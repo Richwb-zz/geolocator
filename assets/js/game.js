@@ -1,6 +1,8 @@
 
 
 function pokeFound(pokeInfo){
+	pokeFoundInfo = pokeInfo;
+	foundPokedex(pokeInfo);
 	$("#pokedex-window").load("battle.html", function(){
 		$("#battle").html("<img src='" + pokeInfo.sprite +"'>");
 		console.log("sprite " + pokeInfo.sprite);
@@ -51,8 +53,8 @@ $("#pokemon").on("click", function(){
 $(document).on("click", "#battle-catch", function(){
 	
 	if(pokeFoundInfo.id < 130){
-		var pokeCatchChance = Math.round(Math.random() * 20);
-		var pokeCatchroll = Math.round(Math.random() * 20);
+		var pokeCatchChance = Math.round(Math.random() * 10);
+		var pokeCatchroll = Math.round(Math.random() * 10);
 	}else{
 		var pokeCatchChance = Math.round(Math.random() * 4);
 		var pokeCatchroll = Math.round(Math.random() * 4);
@@ -61,7 +63,7 @@ $(document).on("click", "#battle-catch", function(){
 	if(pokeCatchroll === pokeCatchChance){
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
 		console.log("caught");
-		// caughtPokedex();
+			caughtPokedex();
 
 	}else{
 		var pokeRunChance = Math.round(Math.random() * 10);

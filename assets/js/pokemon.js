@@ -122,7 +122,7 @@ function api(typeChosen){
 					});
 
 					
-
+					
 					pokeFound(pokeFoundInfo);
 				},
 				error:
