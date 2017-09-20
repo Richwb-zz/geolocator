@@ -1,5 +1,7 @@
-
+var pokeFoundInfo;
 // List of google map locations with pokemon type as first value
+
+
 var typeLocation = [["airport","flying"],
 ["aquarium","water"],
 ["bar","poison"],
@@ -52,7 +54,7 @@ var pokeRandomType = "";
 // searches through array to find the location and then randomly chooses one of its types
 
 function pokeGetType(pokeLocation){
-	console.log("clicked" + pokeLocation);
+	console.log("clicked " + pokeLocation);
 	loop:
 	for (var i = 0; i < pokeLocation.length; i++) {
 		for (var j = 0; j < typeLocation.length ; j++) {
@@ -102,28 +104,33 @@ function api(typeChosen){
 				dataType: "json",
 				success:
 				function(pokeData){
-					skip = 0;
+					pokeTypeNum = 1;
 					pokeTypesList = [];
 
 					// Assign objects to values
-					var pokeSprite = pokeData.sprites.front_default;
-					var PokeNumber = pokeData.id;
-					var PokeName = pokeData.name;
-					var PokeHeight = pokeData.height;
-					var PokeWeight = pokeData.weight;
-
+					pokeFoundInfo = {id: pokeData.id,
+						name: pokeData.name, 
+						sprite: pokeData.sprites.front_default,
+						height: pokeData.height,
+						weight: pokeData.weight
+					};
+					
 					// Loop through the pokemon's types and add them to the array 
 					$.each(pokeData.types, function(key, value){
-							pokeTypesList.push(value.type.name);
+							pokeFoundInfo["type" + pokeTypeNum] = value.type.name;
+							pokeTypeNum++;
 					});
 
-					console.log(pokeSprite + " " + PokeNumber + " " + PokeName + " " + PokeHeight + " " + PokeWeight + " " + pokeTypesList);
+					
+
+					pokeFound(pokeFoundInfo);
 				},
 				error:
 				function(error){
 					console.log("test2 " + pokeChosen + " " + JSON.stringify(error));
 				}
 			});
+			console.log("hello " + JSON.stringify(pokeFoundInfo));
 		},
 		error:
 		function(error){

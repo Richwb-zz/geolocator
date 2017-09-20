@@ -1,80 +1,97 @@
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 /* Optional: Makes the sample page fill the window. */
+@font-face {
+    font-family: 'early_gameboyregular';
+    src: url('../fonts/webfontkit/early_gameboy-webfont.woff2') format('woff2'),
+         url('../fonts/webfontkit/early_gameboy-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     height: 100%;
     margin: 0;
+    font-family: 'early_gameboyregular', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
-h1 {
+ul {
+    font-family: 'early_gameboyregular', Arial, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+h2 {
     text-align: center;
+    font-family: 'early_gameboyregular', Arial, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 20px;
+}
+
+.hide{
+    visibility: hidden;
+    display: none;
 }
 
 #map {
-    width: 80%;
-    height: 600px;
-    margin-top: 1%;
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-bottom: 5%;
+    width: 100%;
+    height: 100%;
     position: relative;
-    border: 3px solid blue;
     border-radius: 35px;
     background-color: white;
 }
 
-#battle {
+#battle-window {
     width: 100%;
     height: 100%;
-    margin: 3px, 3px;
-    border: 1px solid black;
-    border-radius: 35px;
     position: relative;
-}
-
-#battle-window {
-    width: 80%;
-    height: 600px;
-    margin-top: 1%;
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-bottom: 5%;
-    position: relative;
-    border: 3px solid blue;
     border-radius: 35px;
-    background: lime radial-gradient(white, lime);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background: #ceff29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom left, #ceff29, #6e7c01);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom left, #ceff29, #6e7c01); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    filter: saturate(70%);
 }
 
 #pokedex-window {
     width: 80%;
-    height: 600px;
+    height: 500px;
     margin-top: 1%;
     margin-right: 10%;
     margin-left: 10%;
     margin-bottom: 5%;
     position: relative;
     border: 3px solid blue;
-    background: rgb(16%, 79%, 54%) linear-gradient(to bottom, white, rgb(16%, 79%, 54%));
+    background: #ceff29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom left, #ceff29, #6e7c01);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom left, #ceff29, #6e7c01); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    filter: saturate(70%);
     border-radius: 35px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .container-fluid {
-	height: 100%;
-    background-color: #ff0008;
+    height: 100%;
+    background-color: #c40823;
     position: relative;
     border: 1px solid blue;
 }
 
-.map-button {
-    width: 100px;
-    height: 100px;
+#map-button {
+    width: 75px;
+    height: 75px;
     margin-top: 15px;
     margin-left: 15px;
 }
 
-.pokeball-button {
-    width: 125px;
-    height: 125px;
+#pokeball-button {
+    width: 100px;
+    height: 100px;
     margin-top: 15px;
     margin-right: 15px;
     float: right;
@@ -88,4 +105,124 @@ h1 {
     bottom: -2px;
     border-bottom-left-radius: 35px;
     border-bottom-right-radius: 35px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px
 }
+
+#sprite {
+    width: 40%;
+    height: 50%;
+    position: relative;
+    border: 1px solid black;
+    margin-top: 5%;
+    margin-left: 5%;
+    float: left;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#stats {
+    width: 35%;
+    height: 85%;
+    position: relative;
+    border: 1px solid black;
+    margin-top: 5%;
+    margin-right: 5%;
+    float: right;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#ball {
+    top: 400px;
+    left: 400px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px; 
+    position: relative;
+    z-index: 3;
+    background-image: linear-gradient(180deg, #500000 0%, #FF0000 42%, #000000 48%, #FFFFFF 56%, #bfbfbf 100%);
+    visibility: hidden;
+    }
+    
+.animToss {
+    animation-name: testToss;
+    animation-timing-function: linear;
+    animation-duration: .8s; 
+    animation-iteration-count: 1;
+    visibility: visible;
+}
+
+@keyframes testToss{
+    
+0%   {left:540px; top:330px;transform: rotate(30deg);visibility: visible;}
+30%   {left:600px; top:200px;}
+40% {left:580px; top:130px;}
+50%   {left:550px; top:90px;transform: rotate(-30deg);}
+75%  {left:500px; top:40px;}
+85% {left:470px; top:50px;}
+100%{left:430px; top:90px; width: 20px;height: 20px;transform: rotate(-40deg);visibility: hidden;}
+
+}
+
+.animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+         }
+         
+@keyframes flash {
+0%, 50%, 100% {
+opacity: 1;
+ }
+25%, 75% {
+opacity: 0;
+ }
+}
+         
+.flash {
+   animation-name: flash;
+}
+
+#pokemon-sprite {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 60px;
+}
+
+#battle-catch {
+    font-family: 'early_gameboyregular', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+#battle-run {
+    font-family: 'early_gameboyregular', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.runAway {
+    animation-name: runAway;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes runAway{
+    
+100%{left: -200px;}
+
+}
+
+
+
+
+
+

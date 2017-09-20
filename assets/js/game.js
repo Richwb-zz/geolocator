@@ -1,88 +1,97 @@
-var map;
-var infowindow;
 
-var locTypes = ["airport", "aquarium", "bar", "campground", "cemetery", "electrician", "electronics_store", "fire_station", "florist", "funeral_home", "gym", "library", "liquor_store", "museum", "park", "zoo", "restaurant", "stadium", "doctor", "police","travel_agency", "pharmacy", "shopping_mall", "bakery", "night_club", "train_station", "school", "gas_station", "amusement_park", "cafe", "subway_station", "jewelry_store", "pet_store", "university", "art_gallery", "parking", "rv_park", "veterinary_care", "movie_theater","lodging"]
-var searchZone = 5000;
 
-function initMap() {
-  var pos = {lat: 37.4213897, lng: -122.083906};
+function pokeFound(pokeInfo){
+	$("#pokedex-window").load("battle.html", function(){
+		$("#battle").html("<img id='pokemon-sprite' src='" + pokeInfo.sprite +"'>");
+		console.log("sprite " + pokeInfo.sprite);
+		$("#battle-footer").html("A wild" + pokeInfo.name + "has appeared! <button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
+		console.log("test2 " + pokeFoundInfo);
+	});
+	
+	
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: pos,
-    zoom: 16
-  });
-
-  infowindow = new google.maps.InfoWindow();
-  
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-
-      var service = new google.maps.places.PlacesService(map);
-      service.nearbySearch({
-        location: pos,
-        radius: searchZone,
-        types: locTypes,
-        rankBy: google.maps.places.RankBy.PROMINENCE,
-      }, callback);
-
-      map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    });
-  }// end if
-
-  else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
+	//foundPokedex(pokeInfo);
 }
 
-function callback(results, status) {
+$("#map-button").on("click", function(){
+	$("#pokedex-window").html("");
+	$("#pokedex-window").load("map.html");
+});
 
-  console.log(results);
+$("#pokeball-button").on("click", function(){
+	$("#pokedex-window").html("");
+	viewPokedex;
+	//$("#pokedex-window").unload("map.html");
+	viewPokedex();
+});
 
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
+$("#battle-ok").on("click", function(){
+	
+});
 
-      createMarker(results[i]);
-      console.log(results[i].types);
-    }
-  }
-}
+$(document).on("click", "#battle-run", function(){
+	$("#battle-footer").html("Got away safely! <button id='battle-runok'>Ok</button>");
+});
 
-function createMarker(place) {
+$(document).on("click", "#battle-runok" , function(){
+	$("#pokedex-window").load("map.html");
+});
 
-  //replace with pokeCall
-  var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
+$(document).on("click", "#battle-fled", function(){
+	$("#pokedex-window").load("map.html");
+});
 
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location,
-    animation: google.maps.Animation.DROP,
-    icon: imgTest
-  });
-  marker.addListener('click', toggleBounce);
-  marker.addListener('click', function(){
-    pokeGetType(place.types);
-  });
+$("#pokemon").on("click", function(){
+	viewPokemon($("pokedex-id").value());
 
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.types[0]);
-    infowindow.open(map, this);
-  });
+	$("#pokedex-sprite").attr("src", "")
+	$("#poke-info").removeClass("hide");
+})
 
+$(document).on("click", "#battle-catch", function(){
 
-function toggleBounce() {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
-}
+	
+	if(pokeFoundInfo.id < 130){
+		var pokeCatchChance = Math.round(Math.random() * 20);
+		var pokeCatchroll = Math.round(Math.random() * 20);
+	}else{
+		var pokeCatchChance = Math.round(Math.random() * 4);
+		var pokeCatchroll = Math.round(Math.random() * 4);
+	}
+
+	if(pokeCatchroll === pokeCatchChance){
+		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
+		console.log("caught");
+		// caughtPokedex();
+
+	}else{
+		var pokeRunChance = Math.round(Math.random() * 10);
+		var runState = false;
+		console.log("not caught");
+		if(pokeFoundInfo.id === 63){
+			if(pokeRunChance !== "2" || pokeRunChance !== "7"){
+				runState = true;
+			}
+		}else{
+			var pokeRunRoll = Math.round(Math.random() * 5);
+
+			if(pokeRunRoll === pokeRunChance){
+				runState = true;
+				console.log("ran");
+			}
+		}
+		if(runState === true){
+			$("#battle").addClass("hide");
+			$("#battle-footer").html(pokeFoundInfo.name + " has fled! <button id='battle-fled'>Ok</button>");
+		}
+	}
+
+});
+
+// $('.type-it').typeIt({
+//   speed: 900,
+//   lifeLike: false,
+//   autoStart: true,
+//   cursor: false
+// })
+// .tiType('A wild Pokemon has appeared')

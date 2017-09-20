@@ -12,37 +12,44 @@
   </head>
   
   <body>
-    
+  
     <div class="container-fluid">
-      <a href="map.html" target="_self">
-    <img class="map-button" src="assets/images/pokedexbutton.png" alt="Map">
-      </a>
-      <a href="index.html" target="_self">
-    <img class="pokeball-button" src="assets/images/pokeball.png" alt="Pokedex">
-      </a>
+     
+    <img id="map-button" src="assets/images/pokedexbutton.png" alt="Map">
+
+    <img id="pokeball-button" src="assets/images/pokeball.png" alt="Pokedex">
       <div id="pokedex-window">
-        <h1>POKEDEX SCREEN</h1>
+        <h2>INSTRUCTIONS</h2>
+        <br><br>
+        <ul>
+          <li>Click the blue button in the top left corner to view map and find Pokemon near you</li>
+          <br>
+          <li>If you want to find Pokemon, you must allow Pokemon to find you by allowing location access</li>
+          <br>
+          <li>Click on the Pokemon in the tall grass to try and catch it</li>
+          <br>
+          <li>Click the Pokeball button in the top right corner to view your caught Pokemon</li>
+          <br>
+          <li>Try to catch 'em all!</li>
+        </ul>
       </div>
     </div>
     
 
 
-
-    
-    
-    
-    <script type="text/javascript" src="assets/js/game.js"></script>
-  
-    <script
+    	  <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous">
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjkb1GTJiQp-c2Os0sCNSxzYiTY0NoSWU&libraries=places&callback=initMap" async defer>
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
 
-    <script type="text/javascript" src="assets/js/pokemon.js"></script>
+    <script type="text/javascript" src="assets/js/data.js"></script>
+    
+    <script type="text/javascript" src="assets/js/game.js"></script>
+
+	<script type="text/javascript" src="assets/js/pokemon.js"></script>
   
   </body>
 </html>
