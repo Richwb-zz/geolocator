@@ -2,13 +2,15 @@ var locTypes = ["airport", "aquarium", "bar", "campground", "cemetery", "electri
 var searchZone = 5000;
 
 var markerArray = [];
+var pMarker;
 
 function initMap() {
   var pos = {lat: 37.4213897, lng: -122.083906};
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
-    zoom: 16
+    zoom: 16,
+    mapTypeId: 'satellite'
   });
 
   infowindow = new google.maps.InfoWindow();
@@ -30,8 +32,12 @@ function initMap() {
       }, callback);
 
       map.setCenter(pos);
+      playerMarker(pos);
+
+
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
+      
     });
   }// end if
 
@@ -39,6 +45,10 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+
+    setInterval(reCenter, 8000,);
+
+    
 }
 
 function callback(results, status) {
@@ -54,10 +64,31 @@ function callback(results, status) {
   }
 }
 
+function playerMarker(pos) {
+
+	//replace with pokeCall
+	var imgMrk ="assets/images/Pokehat.png"; 
+
+	var playerLoc = pos;
+
+	pMarker = new google.maps.Marker({
+
+		map: map,
+		position: playerLoc,
+		animation: google.maps.Animation.DROP,
+		icon: imgMrk
+
+	});
+}
+
+function pRepos(pos){
+	pMarker.setPosition(pos);
+}
+
 function createMarker(place) {
 
 	//replace with pokeCall
-	var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
+	var imgTest ="assets/images/Pikapeek.png"; 
 
 	var placeLoc = place.geometry.location;
 
@@ -79,6 +110,7 @@ function createMarker(place) {
 		
 		var rangeCheck = true;
 
+
 		if (rangeCheck === false){
 			// radius comparision nooot working atm.
 			// TDL.
@@ -89,7 +121,9 @@ function createMarker(place) {
 			infowindow.open(map, this);
 			toggleBounce();
 			soundBattle();
+			pokeGetType(place.types);
 		}
+
 
 	});
 	
@@ -113,4 +147,28 @@ function createMarker(place) {
 	    marker.setAnimation(google.maps.Animation.BOUNCE);
 	  }
 	}
+}
+
+function reCenter(pos){
+	console.log("Tick")
+	if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(function(position) {
+	      pos = {
+	        lat: position.coords.latitude,
+	        lng: position.coords.longitude
+	      };
+		map.setCenter(pos);
+	  	pRepos(pos);
+	    }, function() {
+	      handleLocationError(true, infoWindow, map.getCenter());
+	      
+	    });
+	  }// end if
+
+	  else {
+	    // Browser doesn't support Geolocation
+	    handleLocationError(false, infoWindow, map.getCenter());
+	  }
+
+
 }

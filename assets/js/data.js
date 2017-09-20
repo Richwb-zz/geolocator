@@ -117,14 +117,11 @@ function viewPokedex(){
     var currentId = 1;
 
     $.each(pokeShot.val(), function(key, value){
-      pokedexHtml += "valueId " + value.id;
       currentId = value.id;
-      pokedexHtml += "math " + (currentId - previousId);
       
       if(currentId - previousId > 1){
         while(currentId - previousId > 1){
           previousId++
-          pokedexHtml += "test" + previousId;
           pokedexHtml += "<div class='row'>";
           pokedexHtml += "<div class='col'>N<sub>o</sub>" + previousId + "</div>";
           pokedexHtml += "<div class='col'>?????</div>"
