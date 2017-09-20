@@ -30,8 +30,10 @@ function initMap() {
       }, callback);
 
       map.setCenter(pos);
+
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
+      
     });
   }// end if
 
@@ -39,6 +41,10 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+
+
+    // setInterval(reCenter, 60000,);  Still 
+    
 }
 
 function callback(results, status) {
@@ -57,7 +63,7 @@ function callback(results, status) {
 function createMarker(place) {
 
 	//replace with pokeCall
-	var imgTest ="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"; 
+	var imgTest ="assets/images/Pikapeek.png"; 
 
 	var placeLoc = place.geometry.location;
 
@@ -116,4 +122,25 @@ function createMarker(place) {
 	    marker.setAnimation(google.maps.Animation.BOUNCE);
 	  }
 	}
+}
+
+function reCenter(pos){
+	console.log("Tick")
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+	map.setCenter(pos);
+
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+      
+    });
+  }// end if
+  else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 }
