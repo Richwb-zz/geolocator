@@ -53,13 +53,10 @@ function initMap() {
 
 function callback(results, status) {
 
-  console.log(results);
-
   if (status === google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
 
       createMarker(results[i]);
-      console.log(results[i].types);
     }
   }
 }
@@ -93,7 +90,6 @@ function createMarker(place) {
 	var placeLoc = place.geometry.location;
 
 	markerArray.push(placeLoc);
-	console.log("Ma" + markerArray);
 
 	var marker = new google.maps.Marker({
 
@@ -150,7 +146,7 @@ function createMarker(place) {
 }
 
 function reCenter(pos){
-	console.log("Tick")
+
 	if (navigator.geolocation) {
 	    navigator.geolocation.getCurrentPosition(function(position) {
 	      pos = {

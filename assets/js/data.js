@@ -16,15 +16,12 @@ var userId;
 
 
 function playerLogin(player){
-  console.log("here");
-  console.log("player " + player.uid);
   userId = player.uid;
   fdb.ref(player.uid)
   .once("value")
   .then(function(playerShot){
-    console.log("shot " + playerShot.val())
+
     if(!playerShot.val()){
-      console.log("here2");
       var playerInfo = {};
 
       playerInfo = {
@@ -58,11 +55,9 @@ function foundPokedex(pokeInfo){
     };
 
     if(!pokeShot.val()) {
-      console.log("testy1");
       fdb.ref(userId + "/pokedetails").set(pokeSet);
       fdb.ref(userId + "/pokedex/").set(pokedex);
     } else if(!pokeShot.val().id){
-      console.log("testy2");
       fdb.ref(userId + "/pokedetails/").update(pokeSet);
       fdb.ref(userId + "/pokedex/").update(pokedex);  
     }
@@ -84,23 +79,15 @@ function caughtPokedex(){
   };
 
   pokedex[userId + "/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
-  console.log("type1 " + pokeFoundInfo["type" + 1]);
-
+ 
   for(var key in pokeFoundInfo){
     if(key.includes("type")){
-      console.log("key " + key);
-      console.log("value " + pokeFoundInfo[key]);
-          
       types = {[key] : pokeFoundInfo[key]};
       fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
     }
   }
   
-
-  console.log("types " + JSON.stringify(types));
   fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
-  console.log("stats complete");
-  console.log("types complete");
   fdb.ref().update(pokedex);
 }
 
@@ -151,27 +138,39 @@ function viewPokedex(){
 }
 
 function viewPokemon(id){
-  var pokeStats;
+  var pokeDetails;
+  var pokeDex;
 
   fdb.ref(userId + "/pokedex/" + id)
   .once("value")
-  .then(function(pokedex){
-    pokeStats = pokeShot;
-    console.log(JSON.stringify(pokedex));
+  .then(function(pokeShot){
+    pokeDex = pokeShot.val();
   
     fdb.ref(userId + "/pokedetails/" + id)
     .once("value")
-    .then(function(pokeStats){
-    pokeStats = pokeShot;
-    console.log(JSON.stringify(pokeStats));
+    .then(function(pokeShot){
+      pokeDetails = pokeShot.val();
+    
+      
+      $("#sprite").html("<img src='" + pokeDetails.image + "'>");
+      
+      $("#pokedex-id").append(" " + pokeDex.id);
+      $("#pokedex-name").append(" " + pokeDex.name);
+      $("#pokedex-caught").append(" " + pokeDex.caught);
+
+      $("#pokedex-height").append(" " + pokeDetails.stats.height);
+      $("#pokedex-weight").append(" " + pokeDetails.stats.weight);
+
+
+
+      for(var key in pokeDetails.types){
+        console.log("types " + pokeDetails.types);
+        console.log("key" + pokeDetails[types][key]);
+
+        $("#pokedex-type").append("<div>" + key + ": " + pokeDetails[types][key] + "<div>");
+      }
+
 
     });
-
-
-
   });
-
-
 }
-
-viewPokemon(7);

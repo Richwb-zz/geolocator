@@ -1,4 +1,4 @@
-console.log("new stuff 18");
+console.log("new stuff 19");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -28,13 +28,9 @@ function pokeFound(pokeInfo){
 	foundPokedex(pokeInfo);
 	$("#pokedex-window").load("battle.html", function(){
 		$("#battle").html("<img id ='pokemon-sprite' src='" + pokeInfo.sprite +"'>");
-		console.log("sprite " + pokeInfo.sprite);
-		$("#battle-footer").html("A wild" + pokeInfo.name + "has appeared! <button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
-		console.log("test2 " + pokeFoundInfo);
+		$("#battle-footer").html("A wild " + pokeInfo.name + " has appeared! <button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
 	});
 	
-	
-
 	//foundPokedex(pokeInfo);
 }
 
@@ -46,7 +42,6 @@ $("#map-button").on("click", function(){
 $("#pokeball-button").on("click", function(){
 	$("#pokedex-window").html("");
 	viewPokedex;
-	//$("#pokedex-window").unload("map.html");
 	viewPokedex();
 });
 
@@ -55,43 +50,50 @@ $("#battle-ok").on("click", function(){
 });
 
 $(document).on("click", "#battle-run", function(){
+	$("#pokedex-window").html("");
 	$("#battle-footer").html("Got away safely! <button id='battle-runok'>Ok</button>");
 });
 
 $(document).on("click", "#battle-runok" , function(){
+	$("#pokedex-window").html("");
 	$("#pokedex-window").load("map.html");
 });
 
 $(document).on("click", "#battle-fled", function(){
+	$("#pokedex-window").html("");
 	$("#pokedex-window").load("map.html");
 });
 
 $("#pokemon").on("click", function(){
+	$("#pokedex-window").html("");
+   $("#pokedex-window").load("pokedex.html");
 	viewPokemon($("pokedex-id").value());
+});
 
-	$("#pokedex-sprite").attr("src", "")
-	$("#poke-info").removeClass("hide");
-})
+$(document).on("click", "#view-pokemon", function(){
+	$("#pokedex-window").html("");
+   $("#pokedex-window").load("pokedex.html");
+	viewPokemon(pokeFoundInfo.id);
+});
 
 $(document).on("click", "#battle-catch", function(){
 	
 	if(pokeFoundInfo.id < 130){
-		var pokeCatchChance = Math.round(Math.random() * 10);
-		var pokeCatchroll = Math.round(Math.random() * 10);
-	}else{
 		var pokeCatchChance = Math.round(Math.random() * 4);
 		var pokeCatchroll = Math.round(Math.random() * 4);
+	}else{
+		var pokeCatchChance = Math.round(Math.random() * 20);
+		var pokeCatchroll = Math.round(Math.random() * 20);
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
-		console.log("caught");
+			$("#pokedex-window").load("map.html");
 			caughtPokedex();
 
 	}else{
 		var pokeRunChance = Math.round(Math.random() * 10);
 		var runState = false;
-		console.log("not caught");
 		if(pokeFoundInfo.id === 63){
 			if(pokeRunChance !== "2" || pokeRunChance !== "7"){
 				runState = true;
@@ -101,7 +103,6 @@ $(document).on("click", "#battle-catch", function(){
 
 			if(pokeRunRoll === pokeRunChance){
 				runState = true;
-				console.log("ran");
 			}
 		}
 		if(runState === true){
@@ -111,11 +112,3 @@ $(document).on("click", "#battle-catch", function(){
 	}
 
 });
-
-// $('.type-it').typeIt({
-//   speed: 900,
-//   lifeLike: false,
-//   autoStart: true,
-//   cursor: false
-// })
-// .tiType('A wild Pokemon has appeared')
