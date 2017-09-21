@@ -1,4 +1,4 @@
-console.log("new stuff 16");
+console.log("new stuff 17");
 
 
 firebase.auth().getRedirectResult().then(function(result) {

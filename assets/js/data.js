@@ -12,7 +12,7 @@ var config = {
 firebase.initializeApp(config);
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
-var userId;
+var userId = "";
 
 
 function playerLogin(player){
