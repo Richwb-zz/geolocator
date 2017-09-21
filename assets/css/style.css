@@ -152,7 +152,6 @@ h2 {
     animation-duration: .8s; 
     animation-iteration-count: 1;
     visibility: visible;
-    animation-play-state: paused;
 }
 
 @keyframes testToss{
@@ -163,7 +162,7 @@ h2 {
 50%   {left:550px; top:90px;transform: rotate(-30deg);}
 75%  {left:500px; top:40px;}
 85% {left:470px; top:50px;}
-100%{left:430px; top:90px; width: 20px;height: 20px;transform: rotate(-40deg);visibility: hidden;animation-play-state: paused;}
+100%{left:430px; top:90px; width: 20px;height: 20px;transform: rotate(-40deg);visibility: hidden;}
 
 }
 
@@ -197,7 +196,7 @@ opacity: 0;
     padding-bottom: 60px;
 }
 
-#battle-catch, #battle-run, #view-pokemon, #battle-fled {
+#battle-catch, #battle-run, #view-pokemon, #battle-fled, #battle-runok {
     font-family: 'early_gameboyregular', Arial, sans-serif;
     font-weight: normal;
     font-style: normal;

@@ -41,8 +41,9 @@ $(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
-$(document).on("click", "#view-pokemon", function(){
+$(document).on("click", "#view-pokemon", function(pokeInfo){
 	$("#pokedex-window").load("pokedex.html");
+	$("#sprite").html("<img id='pokemon-sprite' src='" + pokeInfo.sprite +"'>");
 });
 
 $("#pokemon").on("click", function(){
@@ -54,17 +55,22 @@ $("#pokemon").on("click", function(){
 
 $(document).on("click", "#battle-catch", function(){
 
-	$("#ball").css({"animation-play-state":"running"});
+	$("#ball").addClass("animToss");
+
+	setTimeout(function() { 
+    $("#ball").removeClass("animToss");
+}, 500);
 	
 	if(pokeFoundInfo.id < 130){
-		var pokeCatchChance = Math.round(Math.random() * 20);
-		var pokeCatchroll = Math.round(Math.random() * 20);
-	}else{
 		var pokeCatchChance = Math.round(Math.random() * 4);
 		var pokeCatchroll = Math.round(Math.random() * 4);
+	}else{
+		var pokeCatchChance = Math.round(Math.random() * 20);
+		var pokeCatchroll = Math.round(Math.random() * 20);
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
+		soundCatch();
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
 		console.log("caught");
 		// caughtPokedex();
@@ -91,7 +97,14 @@ $(document).on("click", "#battle-catch", function(){
 		}
 	}
 
+
 });
+
+var catchSound = new Audio('assets/sound/21-fanfare-poke-mon-caught.mp3');
+	
+	function soundCatch(){
+		catchSound.play();
+	}
 
 // $('.type-it').typeIt({
 //   speed: 900,
