@@ -153,7 +153,7 @@ function viewPokemon(id){
       pokeDetails = pokeShot.val();
     
       
-      $("#sprite").html("<img src='" + pokeDetails.image + "'>");
+      $("#sprite").html("<img id='pokedex-sprite' src='" + pokeDetails.image + "'>");
 
       $("#pokedex-id").append(" " + pokeDex.id);
       $("#pokedex-name").append(" " + pokeDex.name);

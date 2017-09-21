@@ -186,7 +186,7 @@ opacity: 0;
    animation-name: flash;
 }
 
-#pokemon-sprite {
+#pokemon-sprite, #pokedex-sprite {
     width: 400px;
     height: 400px;
     position: absolute;
