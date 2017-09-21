@@ -10,20 +10,18 @@ var config = {
 };
 
 firebase.initializeApp(config);
-console.log("new stuff");
+console.log("new stuff2");
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
 var user;
-
-
-  firebase.auth().signInWithRedirect(provider);
-
 
 firebase.auth().getRedirectResult().then(function(result) {
   if (result.credential) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     var token = result.credential.accessToken;
     // ...
+  }else{
+    firebase.auth().signInWithRedirect(provider);
   }
   // The signed-in user info.
   user = result.user;
