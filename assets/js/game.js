@@ -70,7 +70,7 @@ $(document).on("click", "#view-pokedex", function(){
 	viewPokemon($(this).find('span:first').text());
 });
 
-$(document).on("click", ".view-pokemon", function(){
+$(document).on("click", "#view-pokemon", function(){
 	$("#pokedex-window").html("");
    $("#pokedex-window").load("pokedex.html");
 	viewPokemon(pokeFoundInfo.id);
