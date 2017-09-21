@@ -10,7 +10,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
-
+console.log("new stuff");
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
 var user;
