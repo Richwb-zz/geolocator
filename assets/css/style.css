@@ -202,6 +202,10 @@ opacity: 0;
     font-style: normal;
 }
 
+.view-poke :hover{
+    background: rgba(0,0,0,0.1)
+}
+
 .run-away {
     animation-name: runAway;
     animation-timing-function: linear;
