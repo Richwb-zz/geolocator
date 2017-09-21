@@ -171,3 +171,16 @@ h1 {
 100%{left: -200px;}
 
 }
+
+.dodge {
+    animation-name: dodgeIt;
+    animation-timing-function: linear;
+    animation-duration: 1s; 
+    animation-iteration-count: 1;
+}
+
+@keyframes dodgeIt{
+    
+50%{right: +=50px;}
+
+}

@@ -11,7 +11,7 @@ function initMap() {
     center: pos,
     zoom: 16,
     mapTypeId: 'satellite'
-  });
+  }); // loads a new map, sets the center to the Googleplex and the map type to sattilite images.
 
   infowindow = new google.maps.InfoWindow();
   
@@ -21,7 +21,7 @@ function initMap() {
       pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
-      };
+      };//gets the geographic position of the user
 
       var service = new google.maps.places.PlacesService(map);
       service.nearbySearch({
@@ -29,10 +29,10 @@ function initMap() {
         radius: searchZone,
         types: locTypes,
         rankBy: google.maps.places.RankBy.PROMINENCE,
-      }, callback);
+      }, callback);// finds all valid locations within 5km of the user
 
-      map.setCenter(pos);
-      playerMarker(pos);
+      map.setCenter(pos); //centers the map on the user
+      playerMarker(pos); //puts a marker at the users position
 
 
     }, function() {
@@ -46,27 +46,26 @@ function initMap() {
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
-    setInterval(reCenter, 8000,);
+    setInterval(reCenter, 8000,); // resets the position of the user marker to the users location every 8 secconds.
 
     
 }
 
 function callback(results, status) {
 
-  console.log(results);
+  // console.log(results);
 
   if (status === google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
 
-      createMarker(results[i]);
-      console.log(results[i].types);
+      createMarker(results[i]); //creates a marker at each valid location
+      // console.log(results[i].types); 
     }
   }
 }
 
 function playerMarker(pos) {
 
-	//replace with pokeCall
 	var imgMrk ="assets/images/Pokehat.png"; 
 
 	var playerLoc = pos;
@@ -78,16 +77,15 @@ function playerMarker(pos) {
 		animation: google.maps.Animation.DROP,
 		icon: imgMrk
 
-	});
+	}); //puts a hat on the user's location
 }
 
 function pRepos(pos){
 	pMarker.setPosition(pos);
-}
+}// resets the location of the hat
 
 function createMarker(place) {
 
-	//replace with pokeCall
 	var imgTest ="assets/images/Pikapeek.png"; 
 
 	var placeLoc = place.geometry.location;
@@ -102,27 +100,20 @@ function createMarker(place) {
 		animation: google.maps.Animation.DROP,
 		icon: imgTest
 
-	});//make markers
+	});//makes hiding pikachu markers at the target location
 
 	google.maps.event.addListener(marker, 'click', function() {
 		
-		pokeGetType(place.types);
+		pokeGetType(place.types); // passes the type of the location to Rich's code
 		
 		var rangeCheck = true;
 
-
-		if (rangeCheck === false){
-			// radius comparision nooot working atm.
-			// TDL.
-		}
-
-		else{
-			infowindow.setContent("Pokemon Found!");
-			infowindow.open(map, this);
-			toggleBounce();
-			soundBattle();
-			pokeGetType(place.types);
-		}
+		infowindow.setContent("Pokemon Found!");
+		infowindow.open(map, this);
+		toggleBounce();
+		soundBattle();
+		pokeGetType(place.types);
+ 		// when someone clicks on a Pikamarker, it bounces, plays music and displays an infowindow
 
 
 	});
@@ -132,13 +123,12 @@ function createMarker(place) {
 	function soundBattle(){
 		batSound.play();
 		setTimeout(soundStop, 3000);
-	}
+	}// plays the music
 
 	function soundStop(){
 		batSound.pause();
 		marker.setMap(null);
-
-	}
+	}//stops the music and removes the marker
 
 	function toggleBounce() {
 	  if (marker.getAnimation() !== null) {
@@ -146,7 +136,7 @@ function createMarker(place) {
 	  } else {
 	    marker.setAnimation(google.maps.Animation.BOUNCE);
 	  }
-	}
+	}// if the marke isnt bouncing, it starts, other wise it stops
 }
 
 function reCenter(pos){
@@ -169,6 +159,4 @@ function reCenter(pos){
 	    // Browser doesn't support Geolocation
 	    handleLocationError(false, infoWindow, map.getCenter());
 	  }
-
-
-}
+}// recenters the map on the users position
