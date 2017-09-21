@@ -71,7 +71,6 @@ h2 {
     background: linear-gradient(to bottom left, #ceff29, #6e7c01); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     filter: saturate(70%);
     border-radius: 35px;
-    overflow-y: scroll;
     overflow-x: hidden;
 }
 
