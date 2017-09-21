@@ -22,7 +22,7 @@ firebase.auth().getRedirectResult().then(function(result) {
     var token = result.credential.accessToken;
     // ...
   }else{
-    firebase.auth().signInWithRedirect(provider);
+    //firebase.auth().signInWithRedirect(provider);
   }
   // The signed-in user info.
   user = result.user;
