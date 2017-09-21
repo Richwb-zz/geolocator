@@ -114,7 +114,7 @@ function viewPokedex(){
         }
       }
 
-      pokedexHtml += "<div class='row view-pokedex>";
+      pokedexHtml += "<div class='row view-pokedex'>";
       pokedexHtml += "<div class='col'>N<sub>o</sub><span class='pokedex-id'>" + value.id + "</span></div>";
       pokedexHtml += "<div class='col pokemon'>" + value.name + "</div>"
       pokedexHtml += "</div>";
