@@ -41,6 +41,10 @@ $(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
+$(document).on("click", "#view-pokemon", function(){
+	$("#pokedex-window").load("pokedex.html");
+});
+
 $("#pokemon").on("click", function(){
 	viewPokemon($("pokedex-id").value());
 
@@ -50,6 +54,7 @@ $("#pokemon").on("click", function(){
 
 $(document).on("click", "#battle-catch", function(){
 
+	$("#ball").css({"animation-play-state":"running"});
 	
 	if(pokeFoundInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 20);
@@ -81,7 +86,7 @@ $(document).on("click", "#battle-catch", function(){
 			}
 		}
 		if(runState === true){
-			$("#battle").addClass("hide");
+			$("#pokemon-sprite").addClass("run-away");
 			$("#battle-footer").html(pokeFoundInfo.name + " has fled! <button id='battle-fled'>Ok</button>");
 		}
 	}
