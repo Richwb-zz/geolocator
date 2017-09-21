@@ -1,4 +1,4 @@
-console.log("new stuff6");
+console.log("new stuff7");
 
 firebase.auth().signInWithRedirect(provider);
 firebase.auth().getRedirectResult().then(function(result) {
