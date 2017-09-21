@@ -29,7 +29,7 @@ function playerLogin(player){
         name: player.displayName,
       }
 
-      fdb.ref(player.uid).set(playerInfo)
+      fdb.ref(player.uid + "/User").set(playerInfo)
     }
   });
 }
