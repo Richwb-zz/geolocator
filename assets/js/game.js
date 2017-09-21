@@ -42,12 +42,12 @@ $("#map-button").on("click", function(){
 
 $("#pokeball-button").on("click", function(){
 	$("#pokedex-window").html("");
-	viewPokedex;
 	viewPokedex();
 });
 
-$("#battle-ok").on("click", function(){
-	
+$(".pokedex-id").on("click", function(){
+	$("#pokedex-window").html("");
+	viewPokemon($(".pokedex-id").text);
 });
 
 $(document).on("click", "#battle-run", function(){
@@ -84,7 +84,7 @@ $(document).on("click", "#battle-catch", function(){
 		setTimeout(function() { 
 	    $("#ball").removeClass("animToss");
 	}, 500);
-	
+
 	if(pokeFoundInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 4);
 		var pokeCatchroll = Math.round(Math.random() * 4);
