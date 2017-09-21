@@ -138,6 +138,7 @@ function viewPokedex(){
 }
 
 function viewPokemon(id){
+  debugger;
   var pokeDetails;
   var pokeDex;
 
@@ -153,7 +154,7 @@ function viewPokemon(id){
     
       
       $("#sprite").html("<img src='" + pokeDetails.image + "'>");
-      
+      debugger;
       $("#pokedex-id").append(" " + pokeDex.id);
       $("#pokedex-name").append(" " + pokeDex.name);
       $("#pokedex-caught").append(" " + pokeDex.caught);

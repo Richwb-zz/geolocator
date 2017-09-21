@@ -72,7 +72,9 @@ $("#pokemon").on("click", function(){
 
 $(document).on("click", "#view-pokemon", function(){
 	$("#pokedex-window").html("");
+   debugger;
    $("#pokedex-window").load("pokedex.html");
+   debugger;
 	viewPokemon(pokeFoundInfo.id);
 });
 
