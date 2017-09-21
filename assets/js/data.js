@@ -12,11 +12,8 @@ var config = {
 firebase.initializeApp(config);
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
-var userId;
-
 
 function playerLogin(player){
-  userId = player.uid;
   fdb.ref(player.uid)
   .once("value")
   .then(function(playerShot){

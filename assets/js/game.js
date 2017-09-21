@@ -1,5 +1,5 @@
 console.log("new stuff 28");
-
+var userId;
 
 firebase.auth().getRedirectResult().then(function(result) {
   if (result.credential) {
@@ -11,6 +11,7 @@ firebase.auth().getRedirectResult().then(function(result) {
   }
   // The signed-in user info.
   playerLogin(result.user);
+  userId = result.user.uid
 
 }).catch(function(error) {
   // Handle Errors here.
