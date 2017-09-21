@@ -1,12 +1,12 @@
-console.log("new stuff5");
+console.log("new stuff6");
+
+firebase.auth().signInWithRedirect(provider);
 firebase.auth().getRedirectResult().then(function(result) {
   debugger;
   if (result.credential) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     var token = result.credential.accessToken;
     // ...
-  }else{
-    firebase.auth().signInWithRedirect(provider);
   }
   // The signed-in user info.
   user = result.user;
