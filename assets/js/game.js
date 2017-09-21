@@ -79,6 +79,12 @@ $(document).on("click", "#view-pokemon", function(){
 
 $(document).on("click", "#battle-catch", function(){
 	
+	$("#ball").addClass("animToss");
+
+		setTimeout(function() { 
+	    $("#ball").removeClass("animToss");
+	}, 500);
+	
 	if(pokeFoundInfo.id < 130){
 		var pokeCatchChance = Math.round(Math.random() * 4);
 		var pokeCatchroll = Math.round(Math.random() * 4);
