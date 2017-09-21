@@ -19,6 +19,7 @@ function playerLogin(player){
   fdb.ref(player.uid)
   .once("value")
   .then(function(playerShot){
+    console.log(JSON.stringify(playerShot.val()));
     if(!playershot){
       var playerInfo = {};
 
