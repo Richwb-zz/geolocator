@@ -1,4 +1,4 @@
-console.log("new stuff 19");
+console.log("new stuff 20");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -89,6 +89,7 @@ $(document).on("click", "#battle-catch", function(){
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
+		debugger;
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
 			$("#pokedex-window").load("map.html");
 			caughtPokedex();

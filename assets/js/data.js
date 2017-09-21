@@ -89,6 +89,8 @@ function caughtPokedex(){
   
   fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
   fdb.ref().update(pokedex);
+
+  debugger;
 }
 
 function viewPokedex(){
