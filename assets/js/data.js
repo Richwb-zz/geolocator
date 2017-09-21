@@ -20,6 +20,7 @@ function playerLogin(player){
   .once("value")
   .then(function(playerShot){
     if(!playershot.val()){
+      console.log("here2");
       var playerInfo = {};
 
       playerInfo = {
