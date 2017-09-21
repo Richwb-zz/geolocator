@@ -203,7 +203,8 @@ opacity: 0;
 }
 
 .poke-row :hover{
-    background: rgba(0,0,0,0.1)
+    background: rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .run-away {
