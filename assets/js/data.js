@@ -90,7 +90,6 @@ function caughtPokedex(){
   fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
   fdb.ref().update(pokedex);
 
-  debugger;
 }
 
 function viewPokedex(){
@@ -173,7 +172,7 @@ function viewPokemon(id){
         $("#pokedex-type").append("<div>" + key + ": " + pokeDetails[types][key] + "<div>");
       }
 
-
+      debugger;
     });
   });
 }

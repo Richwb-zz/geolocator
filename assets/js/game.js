@@ -1,4 +1,4 @@
-console.log("new stuff 20");
+console.log("new stuff 22");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -72,9 +72,7 @@ $("#pokemon").on("click", function(){
 
 $(document).on("click", "#view-pokemon", function(){
 	$("#pokedex-window").html("");
-   debugger;
    $("#pokedex-window").load("pokedex.html");
-   debugger;
 	viewPokemon(pokeFoundInfo.id);
 });
 
@@ -89,9 +87,7 @@ $(document).on("click", "#battle-catch", function(){
 	}
 
 	if(pokeCatchroll === pokeCatchChance){
-		debugger;
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
-			$("#pokedex-window").load("map.html");
 			caughtPokedex();
 
 	}else{
