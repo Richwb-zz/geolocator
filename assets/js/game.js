@@ -1,4 +1,4 @@
-console.log("new stuff 27");
+console.log("new stuff 28");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -68,7 +68,7 @@ $(document).on("click", ".view-pokedex", function(){
 	$("#pokedex-window").html("");
    $("#pokedex-window").load("pokedex.html");
 	
-	viewPokemon();
+	viewPokemon($(this).find('span:first').text());
 });
 
 $(document).on("click", ".view-pokemon", function(){
