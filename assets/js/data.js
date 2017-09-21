@@ -12,7 +12,7 @@ var config = {
 firebase.initializeApp(config);
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
-var userId = "";
+var userId;
 
 
 function playerLogin(player){
@@ -37,7 +37,7 @@ function playerLogin(player){
 }
 
 function foundPokedex(pokeInfo){
-  fdb.ref(UserId + "/pokedex/")
+  fdb.ref(userId + "/pokedex/")
   .once("value")
   .then(function(pokeShot){
     var pokeSet = [];
@@ -59,12 +59,12 @@ function foundPokedex(pokeInfo){
 
     if(!pokeShot.val()) {
       console.log("testy1");
-      fdb.ref(UserId + "/pokedetails").set(pokeSet);
-      fdb.ref(UserId + "/pokedex/").set(pokedex);
+      fdb.ref(userId + "/pokedetails").set(pokeSet);
+      fdb.ref(userId + "/pokedex/").set(pokedex);
     } else if(!pokeShot.val().id){
       console.log("testy2");
-      fdb.ref(UserId + "/pokedetails/").update(pokeSet);
-      fdb.ref(UserId + "/pokedex/").update(pokedex);  
+      fdb.ref(userId + "/pokedetails/").update(pokeSet);
+      fdb.ref(userId + "/pokedex/").update(pokedex);  
     }
   });
 }
@@ -83,7 +83,7 @@ function caughtPokedex(){
     }
   };
 
-  pokedex[UserId + "/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
+  pokedex[userId + "/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
   console.log("type1 " + pokeFoundInfo["type" + 1]);
 
   for(var key in pokeFoundInfo){
@@ -92,20 +92,20 @@ function caughtPokedex(){
       console.log("value " + pokeFoundInfo[key]);
           
       types = {[key] : pokeFoundInfo[key]};
-      fdb.ref(UserId + "/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
+      fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
     }
   }
   
 
   console.log("types " + JSON.stringify(types));
-  fdb.ref(UserId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
+  fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
   console.log("stats complete");
   console.log("types complete");
   fdb.ref().update(pokedex);
 }
 
 function viewPokedex(){
-  fdb.ref(UserId + "/pokedex")
+  fdb.ref(userId + "/pokedex")
   .once("value")
   .then(function(pokeShot){
 
@@ -153,13 +153,13 @@ function viewPokedex(){
 function viewPokemon(id){
   var pokeStats;
 
-  fdb.ref(UserId + "/pokedex/" + id)
+  fdb.ref(userId + "/pokedex/" + id)
   .once("value")
   .then(function(pokedex){
     pokeStats = pokeShot;
     console.log(JSON.stringify(pokedex));
   
-    fdb.ref(UserId + "/pokedetails/" + id)
+    fdb.ref(userId + "/pokedetails/" + id)
     .once("value")
     .then(function(pokeStats){
     pokeStats = pokeShot;
