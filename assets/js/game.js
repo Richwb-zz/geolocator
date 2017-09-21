@@ -78,6 +78,12 @@ $(document).on("click", "#battle-catch", function(){
 	}else{
 		var pokeRunChance = Math.round(Math.random() * 10);
 		var runState = false;
+		$("#pokemon-sprite").addClass("dodge")
+
+		setTimeout(function() { 
+    	$("#pokemon-sprite").removeClass("dodge");
+	}, 500);
+
 		console.log("not caught");
 		if(pokeFoundInfo.id === 63){
 			if(pokeRunChance !== "2" || pokeRunChance !== "7"){

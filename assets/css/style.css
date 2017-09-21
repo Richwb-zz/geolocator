@@ -216,6 +216,20 @@ opacity: 0;
 
 }
 
+.dodge {
+    animation-name: dodgeRight;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-play-state: initial;
+}
+
+@keyframes dodgeRight{
+    
+50%{transform: translateX(300px);}
+
+}
+
 
 
 
