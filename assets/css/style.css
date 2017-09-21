@@ -202,7 +202,7 @@ opacity: 0;
     font-style: normal;
 }
 
-.view-poke :hover{
+.poke-row :hover{
     background: rgba(0,0,0,0.1)
 }
 

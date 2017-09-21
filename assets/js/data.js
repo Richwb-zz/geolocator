@@ -104,7 +104,7 @@ function viewPokedex(){
       if(currentId - previousId > 1){
         while(currentId - previousId > 1){
           previousId++
-          pokedexHtml += "<div class='row'>";
+          pokedexHtml += "<div class='row poke-row'>";
           pokedexHtml += "<div class='col'>N<sub>o</sub>" + previousId + "</div>";
           pokedexHtml += "<div class='col'>?????</div>"
           pokedexHtml += "</div>";
