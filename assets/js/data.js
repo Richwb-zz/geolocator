@@ -10,7 +10,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
-console.log("new stuff2");
+console.log("new stuff4");
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
 var user;
@@ -22,7 +22,7 @@ firebase.auth().getRedirectResult().then(function(result) {
     var token = result.credential.accessToken;
     // ...
   }else{
-    //firebase.auth().signInWithRedirect(provider);
+    firebase.auth().signInWithRedirect(provider);
   }
   // The signed-in user info.
   user = result.user;
