@@ -12,11 +12,13 @@ var config = {
 firebase.initializeApp(config);
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
+var userId;
 
 
 function playerLogin(player){
   console.log("here");
   console.log("player " + player.uid);
+  userId = player.uid;
   fdb.ref(player.uid)
   .once("value")
   .then(function(playerShot){
@@ -35,7 +37,7 @@ function playerLogin(player){
 }
 
 function foundPokedex(pokeInfo){
-  fdb.ref("User/pokedex/")
+  fdb.ref(UserId + "/pokedex/")
   .once("value")
   .then(function(pokeShot){
     var pokeSet = [];
@@ -57,12 +59,12 @@ function foundPokedex(pokeInfo){
 
     if(!pokeShot.val()) {
       console.log("testy1");
-      fdb.ref("User/pokedetails").set(pokeSet);
-      fdb.ref("User/pokedex/").set(pokedex);
+      fdb.ref(UserId + "/pokedetails").set(pokeSet);
+      fdb.ref(UserId + "/pokedex/").set(pokedex);
     } else if(!pokeShot.val().id){
       console.log("testy2");
-      fdb.ref("User/pokedetails/").update(pokeSet);
-      fdb.ref("User/pokedex/").update(pokedex);  
+      fdb.ref(UserId + "/pokedetails/").update(pokeSet);
+      fdb.ref(UserId + "/pokedex/").update(pokedex);  
     }
   });
 }
@@ -81,7 +83,7 @@ function caughtPokedex(){
     }
   };
 
-  pokedex["User/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
+  pokedex[UserId + "/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
   console.log("type1 " + pokeFoundInfo["type" + 1]);
 
   for(var key in pokeFoundInfo){
@@ -90,20 +92,20 @@ function caughtPokedex(){
       console.log("value " + pokeFoundInfo[key]);
           
       types = {[key] : pokeFoundInfo[key]};
-      fdb.ref("User/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
+      fdb.ref(UserId + "/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
     }
   }
   
 
   console.log("types " + JSON.stringify(types));
-  fdb.ref("User/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
+  fdb.ref(UserId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
   console.log("stats complete");
   console.log("types complete");
   fdb.ref().update(pokedex);
 }
 
 function viewPokedex(){
-  fdb.ref("User/pokedex")
+  fdb.ref(UserId + "/pokedex")
   .once("value")
   .then(function(pokeShot){
 
@@ -151,13 +153,13 @@ function viewPokedex(){
 function viewPokemon(id){
   var pokeStats;
 
-  fdb.ref("User/pokedex/" + id)
+  fdb.ref(UserId + "/pokedex/" + id)
   .once("value")
   .then(function(pokedex){
     pokeStats = pokeShot;
     console.log(JSON.stringify(pokedex));
   
-    fdb.ref("User/pokedetails/" + id)
+    fdb.ref(UserId + "/pokedetails/" + id)
     .once("value")
     .then(function(pokeStats){
     pokeStats = pokeShot;
