@@ -1,4 +1,4 @@
-console.log("new stuff 23");
+console.log("new stuff 24");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -21,6 +21,7 @@ firebase.auth().getRedirectResult().then(function(result) {
   // The firebase.auth.AuthCredential type that was used.
   var credential = error.credential;
   // ...
+  var catchSound = new Audio('assets/sound/21-fanfare-poke-mon-caught.mp3');
 });
 
 function pokeFound(pokeInfo){
@@ -88,14 +89,24 @@ $(document).on("click", "#battle-catch", function(){
 
 	if(pokeCatchroll === pokeCatchChance){
 		$("#battle-footer").html(pokeFoundInfo.name + " was caught! <button id='view-pokemon'>Ok</button>");
+			catchSound.play()
 			caughtPokedex();
 
 	}else{
+
 		var pokeRunChance = Math.round(Math.random() * 10);
 		var runState = false;
+
+		$("#pokemon-sprite").addClass("dodge")
+
+		setTimeout(function() { 
+    		$("#pokemon-sprite").removeClass("dodge");
+		}, 500);
+
 		if(pokeFoundInfo.id === 63){
 			if(pokeRunChance !== "2" || pokeRunChance !== "7"){
 				runState = true;
+
 			}
 		}else{
 			var pokeRunRoll = Math.round(Math.random() * 5);
@@ -111,3 +122,9 @@ $(document).on("click", "#battle-catch", function(){
 	}
 
 });
+
+var catchSound = new Audio('assets/sound/21-fanfare-poke-mon-caught.mp3');
+	
+function soundCatch(){
+	catchSound.play();
+}
