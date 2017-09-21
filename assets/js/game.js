@@ -11,8 +11,8 @@ firebase.auth().getRedirectResult().then(function(result) {
   }
   // The signed-in user info.
   playerLogin(result.user);
-  userId = result.user.uid
-
+  userId = result.user.uid;
+  debugger;
 }).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
