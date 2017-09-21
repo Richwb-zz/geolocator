@@ -1,4 +1,4 @@
-console.log("new stuff 25");
+console.log("new stuff 26");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -63,7 +63,7 @@ $(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
-$(document).on("click", ".view-pokedex").on("click", function(){
+$(document).on("click", ".view-pokedex", function(){
 	console.log("id " + $(this).closest('span').text())
 	$("#pokedex-window").html("");
    $("#pokedex-window").load("pokedex.html");
