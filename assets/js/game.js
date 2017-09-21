@@ -63,7 +63,7 @@ $(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
-$(document).on("click", ".view-pokedex", function(){
+$(document).on("click", "#view-pokedex", function(){
 	console.log("id " + $(this).find('span:first').text())
 	$("#pokedex-window").html("");
    $("#pokedex-window").load("pokedex.html");
