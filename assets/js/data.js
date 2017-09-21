@@ -15,6 +15,7 @@ var fdb = firebase.database();
 
 
 function playerLogin(player){
+  console.log("here");
   fdb.ref(player.uid)
   .once("value")
   .then(function(playerShot){
