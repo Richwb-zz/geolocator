@@ -10,10 +10,25 @@ var config = {
 };
 
 firebase.initializeApp(config);
-console.log("new stuff4");
 var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
-var user;
+
+
+function playerLogin(player){
+  fdb.ref(player.uid)
+  .once("value")
+  .then(function(playerShot){
+    if(!playershot){
+      var playerInfo = {};
+
+      playerInfo = {
+        name: player.displayName,
+      }
+
+      fdb.ref(player.uid).set(playerInfo)
+    }
+  });
+}
 
 function foundPokedex(pokeInfo){
   fdb.ref("User/pokedex/")
