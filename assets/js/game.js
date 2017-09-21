@@ -1,4 +1,4 @@
-console.log("new stuff 14");
+console.log("new stuff 15");
 
 
 firebase.auth().getRedirectResult().then(function(result) {
@@ -11,7 +11,7 @@ firebase.auth().getRedirectResult().then(function(result) {
   }
   // The signed-in user info.
   playerLogin(result.user);
-  debugger;
+
 }).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
