@@ -139,7 +139,6 @@ function viewPokedex(){
 }
 
 function viewPokemon(id){
-  debugger;
   var pokeDetails;
   var pokeDex;
 
@@ -166,13 +165,11 @@ function viewPokemon(id){
 
 
       for(var key in pokeDetails.types){
-        console.log("types " + pokeDetails.types);
-        console.log("key" + pokeDetails[types][key]);
+        console.log("types " + JSON.stringify(pokeDetails["types"]));
+        console.log("key" + pokeDetails["types"][key]);
 
-        $("#pokedex-type").append("<div>" + key + ": " + pokeDetails[types][key] + "<div>");
+        $("#pokedex-type").append("<div>" + key + ": " + pokeDetails["types"][key] + "<div>");
       }
-
-      debugger;
     });
   });
 }
