@@ -31,8 +31,6 @@ function pokeFound(pokeInfo){
 		$("#battle").html("<img id ='pokemon-sprite' src='" + pokeInfo.sprite +"'>");
 		$("#battle-footer").html("A wild " + pokeInfo.name + " has appeared! <button id='battle-catch'>Catch</button><button id='battle-run'>Run</button>");
 	});
-	
-	//foundPokedex(pokeInfo);
 }
 
 $("#map-button").on("click", function(){
@@ -65,9 +63,11 @@ $(document).on("click", "#battle-fled", function(){
 	$("#pokedex-window").load("map.html");
 });
 
-$(".view-pokedex").on("click", function(){
+$(document).on("click", ".view-pokedex").on("click", function(){
+	console.log("id " + $(this).closest('span').text())
 	$("#pokedex-window").html("");
    $("#pokedex-window").load("pokedex.html");
+	
 	viewPokemon($(this).closest('span').text());
 });
 
