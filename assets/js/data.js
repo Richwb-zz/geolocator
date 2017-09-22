@@ -10,54 +10,87 @@ var config = {
 };
 
 firebase.initializeApp(config);
+var provider = new firebase.auth.GoogleAuthProvider();
 var fdb = firebase.database();
 
-
-function foundPokedex(pokeInfo){
-  fdb.ref("User/Pokedex/" + pokeInfo.id)
+function playerLogin(player){
+  fdb.ref(player.uid)
   .once("value")
-  .then(function(pokeShot){
-    if(!(pokeShot.val())) {
-      var pokeSet = [];
-      
-      pokeSet[pokeInfo.id] = {
-        pokedex: {
-          caught: "no",
-          id: pokeInfo.id,
-          name: pokeInfo.name
-        },
-        image: pokeInfo.image
-      };
+  .then(function(playerShot){
 
+    if(!playerShot.val()){
+      var playerInfo = {};
 
-      fdb.ref("User/Pokedex").set(pokeSet);
+      playerInfo = {
+        name: player.displayName,
+      }
+
+      fdb.ref(player.uid + "/User").set(playerInfo)
     }
   });
 }
 
-function caughtPokedex(pokeInfo){
-  var pokeSet = {};
-  
-  pokeSet[pokeInfo.id] = {
-    pokedex: {
-      caught: yes
-    },
+function foundPokedex(pokeInfo){
+  fdb.ref(userId + "/pokedex/")
+  .once("value")
+  .then(function(pokeShot){
+    var pokeSet = [];
+    var pokedex = [];
+    
+    pokeSet = {
+      [pokeInfo.id]: {
+        image: pokeInfo.sprite
+      }
+    };
+
+    pokedex = {
+      [pokeInfo.id]: {
+        caught: "no",
+        id: pokeInfo.id,
+        name: pokeInfo.name
+      }
+    };
+
+    if(!pokeShot.val()) {
+      fdb.ref(userId + "/pokedetails").set(pokeSet);
+      fdb.ref(userId + "/pokedex/").set(pokedex);
+    } else if(!pokeShot.val().id){
+      fdb.ref(userId + "/pokedetails/").update(pokeSet);
+      fdb.ref(userId + "/pokedex/").update(pokedex);  
+    }
+  });
+}
+
+function caughtPokedex(){
+  var pokeStats = {};
+  var pokedex = {};
+  var types = {};
+  var typeKey;
+
+  pokeStats = {
+    image: pokeFoundInfo.sprite,
     stats: {
-      height: pokeInfo.height,
-      weight: pokeInfo.weight
+      height: pokeFoundInfo.height,
+      weight: pokeFoundInfo.weight
     }
   };
 
-  for (var i = 5; i < pokeInfo.length; i++) {
-    pokeSet[pokeInfo.id][types]["type" + 1] = pokeInfo[i];
+  pokedex[userId + "/pokedex/" + pokeFoundInfo.id + "/caught"] = "yes";
+ 
+  for(var key in pokeFoundInfo){
+    if(key.includes("type")){
+      types = {[key] : pokeFoundInfo[key]};
+      fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id + "/types").update(types);
+    }
   }
+  
+  fdb.ref(userId + "/pokedetails/" + pokeFoundInfo.id).update(pokeStats);
+  fdb.ref().update(pokedex);
 
-
-  fdb.ref("User/pokedetails/" + pokeInfo.id).update(pokeSet);
 }
 
 function viewPokedex(){
-  fdb.ref("User/pokedex")
+  fdb.ref(userId + "/pokedex")
   .once("value")
   .then(function(pokeShot){
 
@@ -66,14 +99,11 @@ function viewPokedex(){
     var currentId = 1;
 
     $.each(pokeShot.val(), function(key, value){
-      pokedexHtml += "valueId " + value.id;
       currentId = value.id;
-      pokedexHtml += "math " + (currentId - previousId);
       
       if(currentId - previousId > 1){
         while(currentId - previousId > 1){
           previousId++
-          pokedexHtml += "test" + previousId;
           pokedexHtml += "<div class='row'>";
           pokedexHtml += "<div class='col'>N<sub>o</sub>" + previousId + "</div>";
           pokedexHtml += "<div class='col'>?????</div>"
@@ -81,7 +111,7 @@ function viewPokedex(){
         }
       }
 
-      pokedexHtml += "<div class='row'>";
+      pokedexHtml += "<div class='row view-pokedex'>";
       pokedexHtml += "<div class='col'>N<sub>o</sub><span class='pokedex-id'>" + value.id + "</span></div>";
       pokedexHtml += "<div class='col pokemon'>" + value.name + "</div>"
       pokedexHtml += "</div>";
@@ -106,27 +136,34 @@ function viewPokedex(){
 }
 
 function viewPokemon(id){
-  var pokeStats;
+  var pokeDetails;
+  var pokeDex;
 
-  fdb.ref("User/pokedex/" + id)
+  fdb.ref(userId + "/pokedex/" + id)
   .once("value")
-  .then(function(pokedex){
-    pokeStats = pokeShot;
-    console.log(JSON.stringify(pokedex));
+  .then(function(pokeShot){
+    pokeDex = pokeShot.val();
   
-    fdb.ref("User/pokedetails/" + id)
+    fdb.ref(userId + "/pokedetails/" + id)
     .once("value")
-    .then(function(pokeStats){
-    pokeStats = pokeShot;
-    console.log(JSON.stringify(pokeStats));
+    .then(function(pokeShot){
+      pokeDetails = pokeShot.val();
+    
+      
+      $("#sprite").html("<img id='pokedex-sprite' src='" + pokeDetails.image + "'>");
 
+      $("#pokedex-id").append(" " + pokeDex.id);
+      $("#pokedex-name").append(" " + pokeDex.name);
+      $("#pokedex-caught").append(" " + pokeDex.caught);
+
+      $("#pokedex-height").append(" " + pokeDetails.stats.height);
+      $("#pokedex-weight").append(" " + pokeDetails.stats.weight);
+
+
+
+      for(var key in pokeDetails.types){
+        $("#pokedex-type").append("<div>" + key + ": " + pokeDetails["types"][key] + "<div>");
+      }
     });
-
-
-
   });
-
-
 }
-
-viewPokemon(7);

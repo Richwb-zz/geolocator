@@ -52,13 +52,10 @@ var pokeRandomType = "";
 
 
 // searches through array to find the location and then randomly chooses one of its types
-
 function pokeGetType(pokeLocation){
-	console.log("clicked " + pokeLocation);
 	loop:
 	for (var i = 0; i < pokeLocation.length; i++) {
 		for (var j = 0; j < typeLocation.length ; j++) {
-			console.log(typeLocation[j][0] + " " + pokeLocation[i]);
 			if(typeLocation[j][0] == pokeLocation[i]){
 				var typeChosen = typeLocation[j][Math.floor((Math.random() * (typeLocation[j].length-1))+1)]
 				break loop;
@@ -130,7 +127,6 @@ function api(typeChosen){
 					console.log("test2 " + pokeChosen + " " + JSON.stringify(error));
 				}
 			});
-			console.log("hello " + JSON.stringify(pokeFoundInfo));
 		},
 		error:
 		function(error){
